@@ -9,7 +9,7 @@ $wgExtensionCredits['parserhook'][] = array(
     'name'           => 'InteractiveTimeline',
     'version'        => '0.1.0',
     'url'            => '',
-    'descriptionmsg' => 'boilerplate-desc',
+    'descriptionmsg' => 'interactivetimeline-desc',
     'author'         => array( 'Chris Page', )
 );
 
