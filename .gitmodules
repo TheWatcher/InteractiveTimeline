@@ -1,0 +1,3 @@
+[submodule "chap-links-library"]
+	path = chap-links-library
+	url = https://github.com/almende/chap-links-library.git
