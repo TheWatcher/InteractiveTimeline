@@ -21,7 +21,7 @@ $wgMessagesDirs['InteractiveTimeline'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['InteractiveTimeline'] = __DIR__ . '/InteractiveTimeline.i18n.php';
 
 // Register hooks
-$wgHooks['ParserFirstCallInit'][] = 'InteractiveTimeline::setHooks';
+$wgHooks['ParserFirstCallInit'][] = 'InteractiveTimeline::onParserFirstCallInit';
 
 // Register modules
 /* If using chap-links-library as a git submodule, use the following */

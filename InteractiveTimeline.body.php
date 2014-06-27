@@ -12,7 +12,7 @@ class InteractiveTimeline {
         return '<pre>' . $output . '</pre>';
     }
 
-	public static function onParserFirstCallInit( &$parser ) {
+    public static function onParserFirstCallInit( &$parser ) {
         // Adds the <itimeline>...</itimeline> tag to the parser.
         $parser -> setHook('itimeline', 'InteractiveTimeline::parserHook');
 
