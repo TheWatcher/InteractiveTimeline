@@ -23,13 +23,19 @@ $wgExtensionMessagesFiles['InteractiveTimeline'] = __DIR__ . '/InteractiveTimeli
 // Register hooks
 $wgHooks['ParserFirstCallInit'][] = 'InteractiveTimeline::setHooks';
 
-
 // Register modules
+/* If using chap-links-library as a git submodule, use the following */
 $chapResourceTemplate = array(
     'localBasePath' => __DIR__.'/chap-links-library/js/src/timeline',
     'remoteExtPath' => 'InteractiveTimeline/chap-links-library/js/src/timeline',
 );
-                                )
+
+/* If using just the timeline files, use the following */
+/* $chapResourceTemplate = array(
+    'localBasePath' => __DIR__.'/timeline',
+    'remoteExtPath' => 'InteractiveTimeline/timeline',
+); */
+
 $wgResourceModules['ext.InteractiveTimeline.timeline'] = $chapResourceTemplate + array(
     'scripts'  => 'timeline-min.js',
     'styles'   => 'timeline.css',
