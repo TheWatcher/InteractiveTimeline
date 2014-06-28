@@ -9,13 +9,17 @@ class InteractiveTimeline {
 
     public static function parserHook( $input, $args = array(), $parser, $frame ) {
         global $wgOut;
+
+		static $tlNumber = 0;
+		$elemID = 'itimeline-' . ++$tlNumber;
+
         $options = array(
             "width" => $args['width'] || 100,
             "height" => $args['height'] || 200,
         );
 
-        return Html::rawelement('div', array('id' => 'itimline'),
-                                Html::element('script', array('type' => 'text/javascript'), "var itdata_test = $('itimeline').interactiveTimeline(".FormatJson::encode($options).");"));
+        return Html::rawelement('div', array('id' => $elemID),
+                                Html::element('div', array('class' => 'itimelinedata'), FormatJson::encode($options)));
    }
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
