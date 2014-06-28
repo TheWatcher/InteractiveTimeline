@@ -42,5 +42,10 @@ $wgResourceModules['ext.InteractiveTimeline.timeline'] = $chapResourceTemplate +
     'position' => 'top',
 );
 
+$wgResourceModules['ext.InteractiveTimeline.loader'] = array(
+    'localBasePath' => __DIR__.'/modules',
+    'remoteExtPath' => 'InteractiveTimeline/modules',
+    'scripts'       => 'ext.interactivetimeline.js'
+);
 
 /* Configuration */
