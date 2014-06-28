@@ -35,6 +35,6 @@
         $( '.itimeline' ).each(function() {
             (new $.InteractiveTimeline(this) );
         });
-    }
+    });
 
 })(jQuery);
