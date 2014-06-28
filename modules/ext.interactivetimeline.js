@@ -1,5 +1,5 @@
 
-;(function($) {
+;(function(mw, $) {
 
     $.InteractiveTimeline = function(el) {
         var base = this;
@@ -12,9 +12,8 @@
         base.$el.data("InteractiveTimeline", base);
 
         base.init = function() {
-            base.data = {};
-            base.data.el   = base.$el.children('.itimelinedata')[0];
-            base.data.json = base.data.el.innerHTML;
+            base.data = mw.config.get(basel.el.attr('id'));
+            base.data.json = JSON.parse(base.data.el.innerHTML);
 
             console.log("Got options " + base.data.json);
         };
@@ -29,4 +28,4 @@
         });
     });
 
-})(jQuery);
+})(mediaWiki, jQuery);
