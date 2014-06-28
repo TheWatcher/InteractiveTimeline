@@ -12,8 +12,7 @@
         base.$el.data("InteractiveTimeline", base);
 
         base.init = function() {
-            base.data = mw.config.get(base.$el.attr('id'));
-            base.data.json = JSON.parse(base.data.el.innerHTML);
+            base.data = JSON.parse(mw.config.get(base.$el.attr('id')));
 
             console.log("Got options " + base.data.json);
         };
