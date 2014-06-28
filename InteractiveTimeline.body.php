@@ -15,7 +15,7 @@ class InteractiveTimeline {
         );
 
         return Html::rawelement('div', array('id' => 'itimline'),
-                                Html::element('script', array('type' => 'text/javascript'), "var itdata_test = ".FormatJson::encode($options)));
+                                Html::element('script', array('type' => 'text/javascript'), "var itdata_test = $('itimeline').interactiveTimeline(".FormatJson::encode($options).");"));
    }
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
