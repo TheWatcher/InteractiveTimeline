@@ -14,7 +14,8 @@ class InteractiveTimeline {
             "height" => $args['height'] || 200,
         );
 
-        return Html::element('script', array('type' => 'text/javascript'), "var itdata_test = ".FormatJson::encode($options));
+        return Html::rawelement('div', array('id' => 'itimline'),
+                                Html::element('script', array('type' => 'text/javascript'), "var itdata_test = ".FormatJson::encode($options)));
    }
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
