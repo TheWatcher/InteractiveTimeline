@@ -22,6 +22,7 @@ $wgExtensionMessagesFiles['InteractiveTimeline'] = __DIR__ . '/InteractiveTimeli
 
 // Register hooks
 $wgHooks['ParserFirstCallInit'][] = 'InteractiveTimeline::onParserFirstCallInit';
+$wgHooks['BeforePageDisplay'][] = 'InteractiveTimeline::onBeforePageDisplay';
 
 // Register modules
 /* If using chap-links-library as a git submodule, use the following */
