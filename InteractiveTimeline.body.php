@@ -8,7 +8,7 @@
 class InteractiveTimeline {
 
     public static function parserHook( $input, $args = array(), $parser, $frame ) {
-        $output = $parser->recursiveTagParse( $text, $frame );
+        $output = $parser -> recursiveTagParse( $input, $frame );
         return '<pre>' . $output . '</pre>';
     }
 
