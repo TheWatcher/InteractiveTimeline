@@ -31,4 +31,10 @@
         });
     };
 
+    $(document).ready(function() {
+        $( '.itimeline' ).each(function() {
+            (new $.InteractiveTimeline(this) );
+        });
+    }
+
 })(jQuery);

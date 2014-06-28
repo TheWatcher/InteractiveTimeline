@@ -18,7 +18,7 @@ class InteractiveTimeline {
             "height" => $args['height'] || 200,
         );
 
-        return Html::rawelement('div', array('id' => $elemID),
+        return Html::rawelement('div', array('id' => $elemID, 'class' => 'itimeline'),
                                 Html::element('div', array('class' => 'itimelinedata'), FormatJson::encode($options)));
    }
 
