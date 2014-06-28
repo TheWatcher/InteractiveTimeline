@@ -14,6 +14,10 @@ class InteractiveTimeline {
             "height" => $args['height'] || 200,
         );
 
+        $parserOutput = $parser->getOutput();
+        $parserOutput->addModules( 'ext.InteractiveTimeline.loader' );
+        $parserOutput->addModules( 'ext.InteractiveTimeline.timeline' );
+
         return Html::element('script', array('type' => 'text/javascript'), "var itdata_test = ".FormatJson::encode($options));
    }
 
