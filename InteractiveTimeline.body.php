@@ -7,9 +7,9 @@
 
 class InteractiveTimeline {
 
-    /** Determine whether the specified argument is an integer, and optionally
-     *  whether it is positive and non-zero. Note that the negative and zero
-     *  checks are not applied to the default.
+    /** Determine whether the specified argument prepresents a valid css size,
+     *  and optionally whether it is positive and non-zero. Note that the
+     *  negative and zero checks are not applied to the default.
      *
      * @param arg       The value to check.
      * @param default   The value to use if validation fails.
@@ -19,13 +19,15 @@ class InteractiveTimeline {
      * @param allowZero Allow the value to be zero.
      * @return The validated value or the default if validation failed
      */
-    public static function intValidate( $arg, $default, &$valid, $allowNeg = false, $allowZero = false ) {
+    public static function validCSSSize( $arg, $default, &$valid, $allowNeg = false, $allowZero = false ) {
         $arg = trim( $arg );
 
-        $regex = $allowNeg ? "/^-?\d+$/" : "/^\d+$/";
+        $units = "(%|cm|mm|in|em|ex|pt|pc|px)?";
+
+        $regex = $allowNeg ? "/^-?\d+$units$/i" : "/^\d+$units$/i";
         if(preg_match($regex, $arg) && ($allowZero || $arg)) {
             $valid = true;
-            return intval($arg);
+            return $arg;
         }
 
         $valid = false;
@@ -39,8 +41,8 @@ class InteractiveTimeline {
 		$elemID = 'itimeline-' . ++$tlNumber;
 
         $options = array(
-            "width"  => self::intValidate($args['width'], 100, $valid),
-            "height" => self::intValidate($args['height'], 200, $valid),
+            "width"  => self::validCSSSize($args['width'] , "100%" , $valid),
+            "height" => self::validCSSSize($args['height'], "300px", $valid),
         );
 
         $parserOutput = $parser -> getOutput();
