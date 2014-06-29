@@ -14,7 +14,7 @@
         base.init = function() {
             base.data = JSON.parse(mw.config.get(base.$el.attr('id')));
 
-            console.log("Got options " + base.data.json);
+            console.log("Got options " + base.data);
         };
 
         // Run initializer
