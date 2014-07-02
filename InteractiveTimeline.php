@@ -38,7 +38,10 @@ $chapResourceTemplate = array(
 ); */
 
 $wgResourceModules['ext.InteractiveTimeline.timeline'] = $chapResourceTemplate + array(
-    'scripts'  => 'timeline-min.js',
+    'scripts'  => array (
+        'timeline-min.js',
+        'timeline-locales.js'
+    ),
     'styles'   => 'timeline.css',
     'position' => 'top',
 );
