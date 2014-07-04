@@ -40,8 +40,8 @@
      * Convert the itl-event children of the specified container to an
      * array of event objects suitable to pass to links.Timeline.
      *
-     * @param container The jQuery element containing the event data.
-     * @return An array of event objects.
+     * @param {Object} container The jQuery element containing the event data.
+     * @return {Array} An array of event objects.
      */
     function buildData( container ) {
         // Get the list of itl-events defined for this timeline container
