@@ -295,7 +295,7 @@ class InteractiveTimeline {
         foreach ( $lines as $line ) {
             $linedata = self::buildTimelineLine( $line );
             if ( isset( $linedata ) ) {
-                $output .= Html::rawelement( 'div', array( 'class' => 'itl-event' ), $linedata );
+                $output .= Html::rawelement( 'div', array( 'class' => 'itl-event' ), $linedata )."\n";
             }
         }
 
