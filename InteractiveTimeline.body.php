@@ -9,10 +9,10 @@ class InteractiveTimeline {
 
     /** Determine whether the specified argument is a valid boolean value.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validBoolean( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -29,10 +29,10 @@ class InteractiveTimeline {
 
     /** Determine whether the specified argument represents a valid css size.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validCSSSize( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -49,10 +49,10 @@ class InteractiveTimeline {
 
     /** Determine whether the specified argument is a valid date with optional time.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validDatetime( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -88,10 +88,10 @@ class InteractiveTimeline {
 
     /** Determine whether the specified argument is a valid integer value.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validInteger( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -109,10 +109,10 @@ class InteractiveTimeline {
     /** Determine whether the specified argument is a locale supported by
      *  the CHAP Timeline code. This expects timeline-locales.js to be loaded.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validLocale( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -131,10 +131,10 @@ class InteractiveTimeline {
      *  style value. This only accepts the built-in styles and it does
      *  not support custom styles.
      *
-     * @param arg       The value to check.
-     * @param valid     A reference to a variable that will be set to true if
-     *                  the argument is valid, false if it is not.
-     * @return The validated value or NULL if validation failed
+     * @param string arg    The value to check.
+     * @param boolean valid A reference to a variable that will be set to true if
+     *                      the argument is valid, false if it is not.
+     * @return string The validated value or NULL if validation failed
      */
     public static function validTimestyle( $arg, &$valid ) {
         $arg = trim( $arg );
@@ -154,15 +154,16 @@ class InteractiveTimeline {
      *  argument, or the value specified for the argument is not valid, this
      *  will not update the options array.
      *
-     * @param options A reference to an array to store the validated options in.
-     * @param args    A reference to an array containing the arguments supplied by the tag.
-     * @param name    The name of the argument to validate. This may contain mixed case,
-     *                even though MediaWiki will lowercase names in the args array, the
-     *                options may require mixed case. The name supplied is converted to
-     *                lowercase to look up the value in args, and used 'as is' when setting
-     *                the value in options.
-     * @param type    The type of validation to apply to the value. Supported values
-     *                are 'boolean', 'csssize', 'datetime', 'integer', 'locale', and 'timestyle'.
+     * @param array options A reference to an array to store the validated options in.
+     * @param array args    A reference to an array containing the arguments supplied by the tag.
+     * @param string name   The name of the argument to validate. This may contain mixed case,
+     *                      even though MediaWiki will lowercase names in the args array, the
+     *                      options may require mixed case. The name supplied is converted to
+     *                      lowercase to look up the value in args, and used 'as is' when setting
+     *                      the value in options.
+     * @param string type   The type of validation to apply to the value. Supported values
+     *                      are 'boolean', 'csssize', 'datetime', 'integer', 'locale',
+     *                      and 'timestyle'.
      */
     public static function validateArgument( &$options, &$args, $name, $type) {
         // All mediawiki args are lowercase, but the options may be lowerCamelCase.
@@ -196,68 +197,148 @@ class InteractiveTimeline {
     }
 
 
-    public static function buildOptions( &$args ) {
+    /** Construct the options to set for the timeline. This validates the arguments
+     *  set in the itimeline tag and stores valid arguments in the options array.
+     *
+     * @param array options A reference to an array to store the validated options in.
+     * @param array args    A reference to an array containing the arguments supplied by the tag.
+     */
+    public static function buildTimelineOptions( &$options, &$args ) {
 
         // Establish any defaults that differ from timeline's own defaults
-        $options = array(
-            "selectable"     => 'false', // No point in making timeline entries selectable
-            "timeChangeable" => 'false', // probably redundant as editable is false, but be sure.
-        );
+        $options['selectable']     = false; // No point in making timeline entries selectable
+        $options['timeChangeable'] = false; // probably redundant as editable is false, but be sure.
 
         // And now check any user-specified arguments
-        self::validateArgument($options, $args, 'animate'        , 'boolean'  );
-        self::validateArgument($options, $args, 'animateZoom'    , 'boolean'  );
-        self::validateArgument($options, $args, 'axizOnTop'      , 'boolean'  );
-        self::validateArgument($options, $args, 'end'            , 'datetime' );
-        self::validateArgument($options, $args, 'eventMargin'    , 'integer'  );
-        self::validateArgument($options, $args, 'eventMarginAxis', 'integer'  );
-        self::validateArgument($options, $args, 'groupsOnRight'  , 'boolean'  );
-        self::validateArgument($options, $args, 'groupsWidth'    , 'csssize'  );
-        self::validateArgument($options, $args, 'groupMinheight' , 'integer'  );
-        self::validateArgument($options, $args, 'height'         , 'csssize'  );
-        self::validateArgument($options, $args, 'locale'         , 'locale'   );
-        self::validateArgument($options, $args, 'max'            , 'datetime' );
-        self::validateArgument($options, $args, 'min'            , 'datetime' );
-        self::validateArgument($options, $args, 'minheight'      , 'integer'  );
-        self::validateArgument($options, $args, 'moveable'       , 'boolean'  );
-        self::validateArgument($options, $args, 'stackEvents'    , 'boolean'  );
-        self::validateArgument($options, $args, 'start'          , 'datetime' );
-        self::validateArgument($options, $args, 'style'          , 'timestyle');
-        self::validateArgument($options, $args, 'showCurrentTime', 'boolean'  );
-        self::validateArgument($options, $args, 'showMajorLabels', 'boolean'  );
-        self::validateArgument($options, $args, 'showMinorLabels', 'boolean'  );
-        self::validateArgument($options, $args, 'showNavigation' , 'boolean'  );
-        self::validateArgument($options, $args, 'width'          , 'csssize'  );
-        self::validateArgument($options, $args, 'zoomable'       , 'boolean'  );
-        self::validateArgument($options, $args, 'zoomMax'        , 'integer'  );
-        self::validateArgument($options, $args, 'zoomMin'        , 'integer'  );
-
+        self::validateArgument( $options, $args, 'animate'        , 'boolean'  );
+        self::validateArgument( $options, $args, 'animateZoom'    , 'boolean'  );
+        self::validateArgument( $options, $args, 'axizOnTop'      , 'boolean'  );
+        self::validateArgument( $options, $args, 'end'            , 'datetime' );
+        self::validateArgument( $options, $args, 'eventMargin'    , 'integer'  );
+        self::validateArgument( $options, $args, 'eventMarginAxis', 'integer'  );
+        self::validateArgument( $options, $args, 'groupsOnRight'  , 'boolean'  );
+        self::validateArgument( $options, $args, 'groupsWidth'    , 'csssize'  );
+        self::validateArgument( $options, $args, 'groupMinheight' , 'integer'  );
+        self::validateArgument( $options, $args, 'height'         , 'csssize'  );
+        self::validateArgument( $options, $args, 'locale'         , 'locale'   );
+        self::validateArgument( $options, $args, 'max'            , 'datetime' );
+        self::validateArgument( $options, $args, 'min'            , 'datetime' );
+        self::validateArgument( $options, $args, 'minheight'      , 'integer'  );
+        self::validateArgument( $options, $args, 'moveable'       , 'boolean'  );
+        self::validateArgument( $options, $args, 'stackEvents'    , 'boolean'  );
+        self::validateArgument( $options, $args, 'start'          , 'datetime' );
+        self::validateArgument( $options, $args, 'style'          , 'timestyle');
+        self::validateArgument( $options, $args, 'showCurrentTime', 'boolean'  );
+        self::validateArgument( $options, $args, 'showMajorLabels', 'boolean'  );
+        self::validateArgument( $options, $args, 'showMinorLabels', 'boolean'  );
+        self::validateArgument( $options, $args, 'showNavigation' , 'boolean'  );
+        self::validateArgument( $options, $args, 'width'          , 'csssize'  );
+        self::validateArgument( $options, $args, 'zoomable'       , 'boolean'  );
+        self::validateArgument( $options, $args, 'zoomMax'        , 'integer'  );
+        self::validateArgument( $options, $args, 'zoomMin'        , 'integer'  );
     }
 
 
+    public static function buildTimelineLine( $line ) {
+
+        // Sections are delimited by |
+        $parts = explode( "|", $line );
+
+        // Lines *must* contsist of two or three parts (start date and data, or start, end, and data)
+        if ( count( $parts ) == 2 || count( $parts ) == 3 ) {
+
+            // The first part must be a datetime string, or the whole line is rejected
+            $value = self::validDatetime( $parts[0], $valid );
+            if ( $valid ) {
+                $output = Html::element( 'div', array( 'class' => 'itl-start' ), $value );
+
+                // If there are three parts, the second part must be the end date
+                if ( count( $parts ) == 3) {
+                    $value = self::validDatetime( $parts[1], $valid );
+                    if ( $valid ) {
+                        $output .= Html::element( 'div', array( 'class' => 'itl-end' ), $value );
+
+                        // third part should be event content
+                        $output .= Html::element( 'div', array( 'class' => 'itl-body' ), $parts[2] );
+
+                        return $output;
+                    }
+
+                // Only two parts, so second part is the body
+                } else {
+                    $output .= Html::element( 'div', array( 'class' => 'itl-body' ), $parts[1] );
+
+                    return $output;
+                }
+            }
+        }
+
+        return NULL;
+    }
 
 
+    /** Validate the timeline events in the itimeline tag body, and produce a series
+     *  of divs containing the data, one per event, for easier parsing in javascript.
+     *
+     *
+     */
+    public static function buildTimelineEvents( $input, $parser, $frame ) {
+
+        // First expand any templates/transclusions
+        $body = $parser->recursiveTagParse( $input, $frame );
+
+        // now split on lines
+        $lines = preg_split( '/$\R?^/m', $string );
+
+        $output = "";
+        // Convert the lines to validated output
+        foreach ( $lines as $line ) {
+            $linedata = self::buildTimelineLine( $line );
+            if ( isset( $linedata ) ) {
+                $output .= Html::rawelement( 'div', array( 'class' => 'itl-event' ), $linedata );
+            }
+        }
+
+        return $output;
+    }
+
+
+    /** Parser hook handler for <itimeline>
+     *
+     * @param string $data    The content of the tag.
+     * @param array $params   The attributes of the tag.
+     * @param Parser $parser  Parser instance available to render  wikitext into html, or parser methods.
+     * @param PPFrame $frame  Can be used to see what template arguments ({{{1}}}) this hook was used with.
+     * @return string HTML to insert in the page.
+     */
     public static function parserHook( $input, $args = array(), $parser, $frame ) {
-        global $wgOut;
 
-		static $tlNumber = 0;
-		$elemID = 'itimeline-' . ++$tlNumber;
+        static $tlNumber = 0;
+        $elemID = 'itimeline-' . ++$tlNumber;
 
+        $options = array();
+        self::buildTimelineOptions( $options, $args );
 
+        $events = self::buildTimelineEvents( $input, $parser, $frame );
+
+        // Store the timeline setup and events in the mediawiki config object
         $parserOutput = $parser -> getOutput();
-        $parserOutput -> addJSConfigVars($elemID, FormatJson::encode($options));
+        $parserOutput -> addJSConfigVars( $elemID, FormatJson::encode( $options ) );
 
-        return Html::rawelement('div', array('id' => $elemID, 'class' => 'itimeline'));
+        return Html::rawelement( 'div', array( 'id' => $elemID, 'class' => 'itimeline' ), $events );
     }
 
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+
+    public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+
+        // Ensure that the required resource modules are loaded
         $out->addModules( 'ext.InteractiveTimeline.loader' );
         $out->addModules( 'ext.InteractiveTimeline.timeline' );
 
-		// Always return true, indicating that parser initialization should
-		// continue normally.
-		return true;
-	}
+        // Always return true, indicating that parser initialization should
+        // proceed normally.
+        return true;
+    }
 
     public static function onParserFirstCallInit( &$parser ) {
         // Adds the <itimeline>...</itimeline> tag to the parser.
