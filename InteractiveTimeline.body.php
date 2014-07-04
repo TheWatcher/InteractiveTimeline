@@ -242,7 +242,7 @@ class InteractiveTimeline {
     public static function buildTimelineLine( $line ) {
 
         // Sections are delimited by |
-        $parts = explode( "|", $line );
+        $parts = explode( "|", trim( $line ) );
 
         // Lines *must* contsist of two or three parts (start date and data, or start, end, and data)
         if ( count( $parts ) == 2 || count( $parts ) == 3 ) {
@@ -259,14 +259,14 @@ class InteractiveTimeline {
                         $output .= Html::element( 'div', array( 'class' => 'itl-end' ), $value );
 
                         // third part should be event content
-                        $output .= Html::element( 'div', array( 'class' => 'itl-body' ), $parts[2] );
+                        $output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[2] );
 
                         return $output;
                     }
 
                 // Only two parts, so second part is the body
                 } else {
-                    $output .= Html::element( 'div', array( 'class' => 'itl-body' ), $parts[1] );
+                    $output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
 
                     return $output;
                 }
@@ -288,7 +288,7 @@ class InteractiveTimeline {
         $body = $parser->recursiveTagParse( $input, $frame );
 
         // now split on lines
-        $lines = preg_split( '/$\R?^/m', $string );
+        $lines = explode( "\n", $body );
 
         $output = "";
         // Convert the lines to validated output
