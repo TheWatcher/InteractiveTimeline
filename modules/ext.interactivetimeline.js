@@ -26,10 +26,10 @@
             base.data = buildData( base.$el );
 
             // Build the new timeline
-            base.timeline = new links.Timeline(base.el, base.config);
+            base.timeline = new links.Timeline( base.el, base.config );
 
             // Draw our timeline with the created data and options
-            base.timeline.draw(base.data);
+            base.timeline.draw( base.data );
         };
 
         // Run initializer
@@ -45,29 +45,29 @@
      */
     function buildData( container ) {
         // Get the list of itl-events defined for this timeline container
-        var events = container.children('div.itl-event');
+        var events = container.children( 'div.itl-event' );
         var data = [];
 
         // Process each event into an object timeline can understand.
         events.each( function( index, elem ) {
                          var jElem = $(elem);
                          // Fetch the elements that contain the start, end, and body if possible
-                         var startdate = jElem.children('div.itl-start').get(0);
-                         var enddate = jElem.children('div.itl-end').get(0);
-                         var body = jElem.children('div.itl-body').get(0);
+                         var startdate = jElem.children( 'div.itl-start' ).get( 0 );
+                         var enddate = jElem.children( 'div.itl-end' ).get( 0 );
+                         var body = jElem.children( 'div.itl-body' ).get( 0 );
 
                          // Must have a start date and body element.
                          if ( startdate && body ) {
-                             var event = { 'start': new Date(startdate.innerText),
+                             var event = { 'start': new Date( startdate.innerText ),
                                            'content': body.innerHTML
                                          };
 
                              // If an end date has be set, store that too.
-                             if(enddate) {
-                                 event['end'] = new Date(enddate.innerText)
+                             if ( enddate) {
+                                 event['end'] = new Date( enddate.innerText )
                              }
 
-                             data.push(event);
+                             data.push( event );
                          }
                      });
 
@@ -75,9 +75,9 @@
     };
 
     // convert all itimeline div elements to timelines.
-    $(document).ready(function() {
+    $( document ).ready( function() {
         $( '.itimeline' ).each( function() {
-            (new $.InteractiveTimeline(this) );
+            new $.InteractiveTimeline( this );
         });
     });
 
