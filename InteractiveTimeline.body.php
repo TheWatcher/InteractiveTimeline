@@ -212,7 +212,7 @@ class InteractiveTimeline {
         // And now check any user-specified arguments
         self::validateArgument( $options, $args, 'animate'        , 'boolean'  );
         self::validateArgument( $options, $args, 'animateZoom'    , 'boolean'  );
-        self::validateArgument( $options, $args, 'axizOnTop'      , 'boolean'  );
+        self::validateArgument( $options, $args, 'axisOnTop'      , 'boolean'  );
         self::validateArgument( $options, $args, 'end'            , 'datetime' );
         self::validateArgument( $options, $args, 'eventMargin'    , 'integer'  );
         self::validateArgument( $options, $args, 'eventMarginAxis', 'integer'  );
