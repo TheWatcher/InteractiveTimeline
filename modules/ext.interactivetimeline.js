@@ -1,7 +1,7 @@
 
 ;(function( mw, $ ) {
 
-    $.InteractiveTimeline = function( el ) {
+    $.InteractiveTimeline = function ( el ) {
         var base = this;
 
         // Access to jQuery and DOM versions of element
@@ -18,10 +18,10 @@
             base.data = buildData( base.$el );
 
             // Build the new timeline
-            timeline = new links.Timeline(base.el, base.config);
+            base.timeline = new links.Timeline(base.el, base.config);
 
             // Draw our timeline with the created data and options
-            timeline.draw(base.data);
+            base.timeline.draw(base.data);
         };
 
         // Run initializer
@@ -29,14 +29,16 @@
     };
 
     function buildData( container ) {
+        // Get the list of itl-events defined for this timeline container
         var events = container.children('div.itl-event');
         var data = [];
 
+        // Process each event into an object timeline can understand.
         events.each( function( index, elem ) {
                          var jElem = $(elem);
-                         var startdate = jElem.children('div.itl-start')[0];
-                         var enddate   = jElem.children('div.itl-end')[0];
-                         var body      = jElem.children('div.itl-body')[0];
+                         var startdate = jElem.children('div.itl-start').get(0);
+                         var enddate = jElem.children('div.itl-end').get(0);
+                         var body = jElem.children('div.itl-body').get(0);
 
                          var event = { 'start': new Date(startdate.innerText),
                                        'content': body.innerHTML
