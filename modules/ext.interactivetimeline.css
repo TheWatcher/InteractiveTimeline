@@ -2,5 +2,5 @@
  * there's no reason for them to ever be visible.
 */
 div.itl-event {
-    display: none;
+	display: none;
 }

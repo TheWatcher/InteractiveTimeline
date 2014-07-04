@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'MEDIAWIKI' ) )
-	die();
+		die();
 /**
  * A parser extension to MediaWiki that adds the <itimline> tag to
  * allow interactive timelines to be displayed via the CHAP Timeline
@@ -31,12 +31,12 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 // Set up the extension Special:Version information
 $wgExtensionCredits['parserhook'][] = array(
-    'path'           => __FILE__,
-    'name'           => 'InteractiveTimeline',
-    'version'        => '0.1.0',
-    'url'            => '',
-    'descriptionmsg' => 'interactivetimeline-desc',
-    'author'         => array( 'Chris Page' )
+		'path'           => __FILE__,
+		'name'           => 'InteractiveTimeline',
+		'version'        => '0.1.0',
+		'url'            => '',
+		'descriptionmsg' => 'interactivetimeline-desc',
+		'author'         => array( 'Chris Page' )
 );
 
 // Register files
@@ -52,29 +52,29 @@ $wgHooks['BeforePageDisplay'][] = 'InteractiveTimeline::onBeforePageDisplay';
 
 /* If using chap-links-library as a git submodule, use the following */
 $chapResourceTemplate = array(
-    'localBasePath' => __DIR__.'/chap-links-library/js/src/timeline',
-    'remoteExtPath' => 'InteractiveTimeline/chap-links-library/js/src/timeline',
+		'localBasePath' => __DIR__.'/chap-links-library/js/src/timeline',
+		'remoteExtPath' => 'InteractiveTimeline/chap-links-library/js/src/timeline',
 );
 
 /* If using just the timeline files, use the following */
 /* $chapResourceTemplate = array(
-    'localBasePath' => __DIR__.'/timeline',
-    'remoteExtPath' => 'InteractiveTimeline/timeline',
+		'localBasePath' => __DIR__.'/timeline',
+		'remoteExtPath' => 'InteractiveTimeline/timeline',
 ); */
 
 $wgResourceModules['ext.InteractiveTimeline.timeline'] = $chapResourceTemplate + array(
-    'scripts'  => array (
-        'timeline-min.js',
-        'timeline-locales.js'
-    ),
-    'styles'   => 'timeline.css',
-    'position' => 'top',
+		'scripts'  => array (
+				'timeline-min.js',
+				'timeline-locales.js'
+		),
+		'styles'   => 'timeline.css',
+		'position' => 'top',
 );
 
 $wgResourceModules['ext.InteractiveTimeline.loader'] = array(
-    'localBasePath' => __DIR__.'/modules',
-    'remoteExtPath' => 'InteractiveTimeline/modules',
-    'scripts'       => 'ext.interactivetimeline.js',
-    'styles'        => 'ext.interactivetimeline.css',
-    'position'      => 'top',
+		'localBasePath' => __DIR__.'/modules',
+		'remoteExtPath' => 'InteractiveTimeline/modules',
+		'scripts'       => 'ext.interactivetimeline.js',
+		'styles'        => 'ext.interactivetimeline.css',
+		'position'      => 'top',
 );
