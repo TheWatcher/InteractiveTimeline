@@ -85,9 +85,9 @@ class InteractiveTimeline {
         // ordinal dates, or decimals in the time section.
         // $matches[N]       1       2               3                             4                5               6           7       8              9
         //                   YYYY  - MM(restricted)- DD(restricted)           T ?  HH              :MM             :SS          Z +/-   HH            :MM
-        if ( preg_match( "/^(\d{4})-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])(?:[ T]([01]\d|2[0-4])(?::([0-5]\d))?(?::([0-5]\d))?(Z|[-+])(0\d|1[0-4])(?::?([0-5]\d))?)?$/", $arg, $matches)){
+        if ( preg_match( "/^(\d{4})-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])(?:[ T]([01]\d|2[0-4])(?::([0-5]\d))?(?::([0-5]\d))?([-+Z])(0\d|1[0-4])?(?::?([0-5]\d))?)?$/", $arg, $matches)){
             $valid = true;
-
+            print_r($matches);
             // Date must be specified in full
             $date = $matches[1] . "-" . $matches[2] . "-" . $matches[3] . "T";
 
@@ -97,11 +97,15 @@ class InteractiveTimeline {
                 ( isset( $matches[6] ) && $matches[6] !== '' ? $matches[6] : "00" );
 
             // If a timezone is set, use it
-            if ( isset( $matches[7] ) && isset( $matches[8] ) ) {
-                $date .= $matches[7].$matches[8];
+            if ( isset( $matches[7] ) && ( $matches[7] === 'Z' || isset( $matches[8] ) ) ) {
+                $date .= $matches[7];
 
-                 // Minute part of time offset is optional
-                $date .= ( isset( $matches[9] ) && $matches[4] !== '' ? $matches[9] : "00" );
+                if ( $matches[7] !== 'Z' ) {
+                    $date .= $matches[8];
+
+                    // Minute part of time offset is optional
+                    $date .= ( isset( $matches[9] ) && $matches[9] !== '' ? $matches[9] : "00" );
+                }
 
             // Otherwise default to UTC explicitly (otherwise the browser
             // will use local time)
