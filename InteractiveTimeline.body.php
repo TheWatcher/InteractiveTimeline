@@ -83,8 +83,8 @@ class InteractiveTimeline {
 
 		// Note that this is not a full IS8601 checker - it does not support periods,
 		// ordinal dates, or decimals in the time section.
-		// $matches[N]       1         2                 3                               4                5                6            7        8               9
-		//                   YYYY  - MM(restricted)- DD(restricted)              T ?  HH               :MM               :SS            Z +/-    HH              :MM
+		// $matches[N]       1         2                 3                         4                 5              6           7      8               9
+		//                   YYYY  -  MM            -  DD(restricted)          T   HH               :MM            :SS          Z +/-  HH             :MM
 		if ( preg_match( "/^(\d{4})-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])(?:[ T]([01]\d|2[0-4])(?::([0-5]\d))?(?::([0-5]\d))?([-+Z])(0\d|1[0-4])?(?::?([0-5]\d))?)?$/", $arg, $matches)){
 			$valid = true;
 
@@ -100,6 +100,7 @@ class InteractiveTimeline {
 			if ( isset( $matches[7] ) && ( $matches[7] === 'Z' || isset( $matches[8] ) ) ) {
 				$date .= $matches[7];
 
+				// If the time is not in UTC, and offset must be specified.
 				if ( $matches[7] !== 'Z' ) {
 					$date .= $matches[8];
 
@@ -107,7 +108,7 @@ class InteractiveTimeline {
 					$date .= ( isset( $matches[9] ) && $matches[9] !== '' ? $matches[9] : "00" );
 				}
 
-			// Otherwise default to UTC explicitly (otherwise the browser
+			// Otherwise default to UTC explicitly (if not included the browser
 			// will use local time)
 			} else {
 				$date .= "Z";
@@ -179,7 +180,7 @@ class InteractiveTimeline {
 
 		if ( preg_match( "/^(box|dot)$/i", $arg, $matches ) ) {
 			$valid = true;
-			return strtolower($matches[0]);
+			return strtolower( $matches[0] );
 		}
 
 		$valid = false;
@@ -209,7 +210,7 @@ class InteractiveTimeline {
 	 */
 	public static function validateArgument( &$options, &$args, $name, $type) {
 		// All mediawiki args are lowercase, but the options may be lowerCamelCase.
-		$lcname = strtolower($name);
+		$lcname = strtolower( $name );
 
 		// Only bother trying to do anything if the user has set the option
 		if ( isset( $args[$lcname] ) ) {
@@ -355,7 +356,7 @@ class InteractiveTimeline {
 		foreach ( $lines as $line ) {
 			$linedata = self::buildTimelineLine( $line );
 			if ( isset( $linedata ) ) {
-				$output .= Html::rawelement( 'div', array( 'class' => 'itl-event' ), $linedata )."\n";
+				$output .= Html::rawelement( 'div', array( 'class' => 'itl-event' ), $linedata ) . "\n";
 			}
 		}
 
@@ -417,7 +418,7 @@ class InteractiveTimeline {
 	 */
 	public static function onParserFirstCallInit( &$parser ) {
 		// Adds the <itimeline>...</itimeline> tag to the parser.
-		$parser -> setHook('itimeline', 'InteractiveTimeline::parserHook');
+		$parser -> setHook( 'itimeline', 'InteractiveTimeline::parserHook' );
 
 		return true;
 	}

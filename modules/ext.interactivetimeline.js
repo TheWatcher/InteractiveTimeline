@@ -50,7 +50,7 @@
 
 		// Process each event into an object timeline can understand.
 		events.each( function( index, elem ) {
-						 var jElem = $(elem);
+						 var jElem = $( elem );
 						 // Fetch the elements that contain the start, end, and body if possible
 						 var startdate = jElem.children( 'div.itl-start' ).get( 0 );
 						 var enddate = jElem.children( 'div.itl-end' ).get( 0 );

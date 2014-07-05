@@ -2,7 +2,7 @@
 if ( ! defined( 'MEDIAWIKI' ) )
 		die();
 /**
- * A parser extension to MediaWiki that adds the <itimline> tag to
+ * A parser extension to MediaWiki that adds the <itimeline> tag to
  * allow interactive timelines to be displayed via the CHAP Timeline
  * library developed by Almende B.V.
  *
