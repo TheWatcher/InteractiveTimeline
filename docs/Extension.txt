@@ -169,6 +169,9 @@ The order in which events are defined is not important, and if the extension can
 
 The body of the &lt;itimeline&gt; tag supports transclusion and template expansion, so you may define a list of events elsewhere and transclude them into the body of the &lt;itimeline&gt; tag.
 
+==Demo==
+A publicly accessible MediaWiki demo of this extension is not currently available. The [http://almende.github.io/chap-links-library/js/timeline/doc/#Example Timeline documentation] contains a number of examples of the capabilities of the Timeline library.
+
 ==Notes==
 <references />
 
