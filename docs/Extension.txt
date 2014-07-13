@@ -53,7 +53,7 @@ Once installed, you can place <code>&lt;itimeline&gt;...&lt;/itimeline&gt;</code
 <!-- These two lines define events that happen at a particular time -->
 2014-07-25T13:00:00Z|[[Phase 1/Target 1|Target 1]]
 2014-07-26T10:00:00Z|[[Phase 1/Target 2|Target 2]]
-<!-- These three are ranges, with start and end times -->
+<!-- These three are ranges, defined using IS8601 intervals with start and end dates and times -->
 2014-07-25T08:00:00Z/2014-07-26T15:00:00Z|[[Phase 1]]
 2014-07-26T12:00:00Z/2014-07-27T15:00:00Z|[[Phase 2]]
 2014-07-25T08:00:00Z/2014-08-00:00:00+02:00|Project 1
@@ -162,7 +162,7 @@ Inside the &lt;itimeline&gt; tag you define the list of events to show in the ti
 : This format defines an event by giving the time of the event and some text describing the event.
 
 ; &lt;datetime&gt;/&lt;datetime&gt;|&lt;event text&gt;
-: This format defines a range. The first datetime is the date and time at which the range starts, the second is the end date and time (inclusive). 
+: This format defines a range using an IS8601 interval. The first datetime is the date and time at which the range starts, the second is the end date and time (inclusive). 
 
 'datetime' values should be provided in the format discussed above in the [[#Dates_and_times|Dates and times]] section. The event text may contain wiki text, so you may include images, links, or other formatting. Please note that complex wiki text should be avoided, or you will probably make the Timeline display go wonky. 
 
