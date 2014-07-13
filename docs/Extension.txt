@@ -54,9 +54,9 @@ Once installed, you can place <code>&lt;itimeline&gt;...&lt;/itimeline&gt;</code
 2014-07-25T13:00:00Z|[[Phase 1/Target 1|Target 1]]
 2014-07-26T10:00:00Z|[[Phase 1/Target 2|Target 2]]
 <!-- These three are ranges, with start and end times -->
-2014-07-25T08:00:00Z|2014-07-26T15:00:00Z|[[Phase 1]]
-2014-07-26T12:00:00Z|2014-07-27T15:00:00Z|[[Phase 2]]
-2014-07-25T08:00:00Z|2014-08-00:00:00+02:00|Project 1
+2014-07-25T08:00:00Z/2014-07-26T15:00:00Z|[[Phase 1]]
+2014-07-26T12:00:00Z/2014-07-27T15:00:00Z|[[Phase 2]]
+2014-07-25T08:00:00Z/2014-08-00:00:00+02:00|Project 1
 </itimeline>
 </source>
 
@@ -84,7 +84,8 @@ The following parts of ISO 8601 are '''not''' supported by InteractiveTimeline:
 * Decimal fractions for hours, minutes, or seconds.
 * Optional time zone designator (the time zone designator must be specified if a time is given)
 * Durations
-* Intervals (although see the [[#Event_Syntax|event syntax]] below)
+* Intervals may only be specified as &lt;start&gt;/&lt;end&gt; as durations are not supported.
+* Repeating intervals.
 
 ===Parameters===
 The following parameters may be specified in the &lt;itimeline&gt; tag. All parameters are optional, and if not specified the default is used.
@@ -155,12 +156,12 @@ The following parameters may be specified in the &lt;itimeline&gt; tag. All para
 |}
 
 ===Event Syntax===
-Inside the &lt;itimeline&gt; tag you define the list of events to show in the timeline. You should include one event per line, and events may not span multiple lines. Events are defined using one or two datetime values and some text describing the event. The fields are separated by vertical bars '|':
+Inside the &lt;itimeline&gt; tag you define the list of events to show in the timeline. You should include one event per line, and events may not span multiple lines. Events are defined using:
 
 ; &lt;datetime&gt;|&lt;event text&gt;
 : This format defines an event by giving the time of the event and some text describing the event.
 
-; &lt;datetime&gt;|&lt;datetime&gt;|&lt;event text&gt;
+; &lt;datetime&gt;/&lt;datetime&gt;|&lt;event text&gt;
 : This format defines a range. The first datetime is the date and time at which the range starts, the second is the end date and time (inclusive). 
 
 'datetime' values should be provided in the format discussed above in the [[#Dates_and_times|Dates and times]] section. The event text may contain wiki text, so you may include images, links, or other formatting. Please note that complex wiki text should be avoided, or you will probably make the Timeline display go wonky. 

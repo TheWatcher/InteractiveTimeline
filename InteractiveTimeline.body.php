@@ -301,27 +301,30 @@ class InteractiveTimeline {
 		// Sections are delimited by |
 		$parts = explode( "|", trim( $line ) );
 
-		// Lines *must* contsist of two or three parts (start date and data, or start, end, and data)
-		if ( count( $parts ) == 2 || count( $parts ) == 3 ) {
+		// Lines *must* contsist of two parts: a date or interval, and the text
+		if ( count( $parts ) == 2 ) {
+
+			// The first part might be an interval
+			$dates = explode( "/", $parts[0]);
 
 			// The first part must be a datetime string, or the whole line is rejected
-			$value = self::validDatetime( $parts[0], $valid );
+			$value = self::validDatetime( $dates[0], $valid );
 			if ( $valid ) {
 				$output = Html::element( 'div', array( 'class' => 'itl-start' ), $value );
 
-				// If there are three parts, the second part must be the end date
-				if ( count( $parts ) == 3) {
-					$value = self::validDatetime( $parts[1], $valid );
+				// If there are two dates, the second is the end date
+				if ( count( $dates ) == 2) {
+					$value = self::validDatetime( $dates[1], $valid );
 					if ( $valid ) {
 						$output .= Html::element( 'div', array( 'class' => 'itl-end' ), $value );
 
 						// third part should be event content
-						$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[2] );
+						$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
 
 						return $output;
 					}
 
-				// Only two parts, so second part is the body
+				// Only one date, so output the body
 				} else {
 					$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
 
