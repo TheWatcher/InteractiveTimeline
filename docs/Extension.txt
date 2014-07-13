@@ -1,0 +1,179 @@
+{{ {{TNTN|Extension}}
+|templatemode    =
+|name            = InteractiveTimeline
+|status          = beta
+|type1           = tag
+|hook1           = BeforePageDisplay
+|hook2           = ParserFirstCallInit
+|username        = Ishtralimnar
+|author          = Chris Page
+|description     = Allow the insertion of interactive timelines using the CHAP Timeline library
+|image           = ITimeline_Example
+|version         = 1.0 (North Ealing)
+|mediawiki       = 1.19+
+|php             = 5.3+
+|needs-updatephp = No
+|license         = GPL
+|download        = {{ {{TNTN|GithubDownload}} |TheWatcher|InteractiveTimeline}}
+|readme          =
+|changelog       =
+|example         =
+|parameters      = <!-- configuration parameters, for use in LocalSettings.php -->
+|tags            = &lt;itimeline&gt;
+}}
+
+The '''InteractiveTimeline''' extension allows users to insert timelines into wiki pages. The timelines are shown using the [http://almende.github.io/chap-links-library/timeline.html CHAP Timeline] javascript library developed by [http://almende.com/ Almende], so they may be panned and zoomed by the user, and events in the timeline may contain images, links to other wiki pages or sites, and other formatting.
+
+This extension is similar to the [[Extension:ChapTimeline|ChapTimeline]] extension, however it provides more parameters to control the displayed timeline, and it does not require [[Extension:Semantic_MediaWiki|Semantic MediaWiki]] to work.
+
+==Installation==
+This extension is not currently available via the standard MediaWiki extension distributor. To install the extension, you should clone the Git repository into your extensions directory as shown here:
+
+<source lang="bash">
+cd extensions/
+git clone https://github.com/TheWatcher/InteractiveTimeline.git
+cd InteractiveTimeline
+git submodule update --init
+</source>
+
+Note that the submodule update is '''required''', as that will fetch the [https://github.com/almende/chap-links-library CHAP Links Library], of which Timeline is a part.
+
+Once you have cloned the repository, add the following code at the bottom of your LocalSettings.php:
+{{#tag:source|
+require_once "$IP/extensions/InteractiveTimeline/InteractiveTimeline.php";
+{{{localsettings|}}}
+|lang="php"
+|style="overflow:auto;"
+}}
+
+==Usage==
+Once installed, you can place <code>&lt;itimeline&gt;...&lt;/itimeline&gt;</code> tags in pages where you want to show a timeline. A large number of parameters may be set in the &lt;itimeline&gt; tag, but all of them are optional. The contents of the tag should be a series of events, with one event defined per line. For example:
+<source lang="xml">
+<itimeline height="300px">
+<!-- These two lines define events that happen at a particular time -->
+2014-07-25T13:00:00Z|[[Phase 1/Target 1|Target 1]]
+2014-07-26T10:00:00Z|[[Phase 1/Target 2|Target 2]]
+<!-- These three are ranges, with start and end times -->
+2014-07-25T08:00:00Z|2014-07-26T15:00:00Z|[[Phase 1]]
+2014-07-26T12:00:00Z|2014-07-27T15:00:00Z|[[Phase 2]]
+2014-07-25T08:00:00Z|2014-08-23T23:59:59+02:00|Project 1
+</itimeline>
+</source>
+
+===Dates and times===
+All dates and times specified in an &lt;itimeline&gt; tag, whether as a value provided for a parameter, or as part of an event definition, should be formatted using a profile of [[w:ISO8601|ISO 8601]]. The dates and times accepted by InteractiveTimeline should take the form of a calendar date, optionally followed by a time:
+
+* Dates should be specified as a four digit year (the year including the century), followed by a two digit month (01 to 12), followed by a two digit day (01 to 31), with the sections optionally separated by hyphens. The form of the date should be <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code>, for example: <code>2014-07-12</code> or <code>20140712</code>.
+* If a time is specified, it must be separated from the date by a single space or the letter 'T'.
+* When provided, times should be specified as a two digit hour (00 to 23<ref>The ISO 8601 specification states that the hour can be in the range 00 to 24, where 00 is midnight at the start of the day, and 24 is midnight at the end. However, the javascript Date.parse() implementations in every browser I have tested fail to parse date strings with the house set to 24, and for safety this extension prevents it.</ref>), followed by a two digit minute (00 to 59), followed by a two digit second (00 to 59), with the fields optionally separated by colons. The time should be of the form <code>HH:MM:SS</code> or <code>HHMMSS</code>. The minutes and seconds are optional, and if not specified they default to "00". Decimal fractions are '''not''' supported for the time fields. All times '''must''' be followed by a time zone designator.
+* The time zone designator should either be "Z" to indicate that the time is in UTC, or it can be an offset from UTC specified as a positive or negative hours (and optionally minutes) of the form ±[HH]:[MM], ±[HH][MM], or ±[HH].
+
+For example, the following dates and times are valid:
+
+* <code>2014-07-12 17:10Z</code> (5:10 pm [[w:UTC|UTC]] on the 12th of July 2014)
+* <code>2014-08-14</code> (00:00 [[w:UTC|UTC]] on the 14th of August 2014)
+* <code>2014-07-12T13:12:10-05:00</code> (13:12:10 in [[w:Central Daylight Time|Central Daylight Time]] on the 12th of July 2014)
+* <code>2014-08-14 08:24+02</code> (8:24am in [[w:Central European Summer Time|Central European Summer Time]] on the 14th of August 2014)
+
+The following parts of ISO 8601 are '''not''' supported by InteractiveTimeline:
+
+* 'Reduced precision' dates (YYYY year only, or YYYY-MM year and month); only complete calendar dates are supported.
+* Week dates
+* Ordinal dates
+* Decimal fractions for hours, minutes, or seconds.
+* Optional time zone designator (the time zone designator must be specified if a time is given)
+* Durations
+* Intervals (although see the [[#Event_Syntax|event syntax]] below)
+
+===Parameters===
+The following parameters may be specified in the &lt;itimeline&gt; tag. All parameters are optional, and if not specified the default is used.
+
+{| class="wikitable sortable"
+! Parameter
+! Type
+! Default
+! Description
+|- 
+| animate || boolean || true || When true, smooth animation is used to move events or ranges when panning the timeline.
+|- 
+| animatezoom || boolean || true || When true, smooth animation is used to move events or ranges when zooming the timeline.
+|- 
+| axisontop || boolean || false || If true the time axis is show at the top of the timeline rather than the bottom.
+|-
+| cluster || boolean || false || If true, nearby events are clustered together when the timeline is zoomed out.
+|-
+| end || datetime || none || The initial end date for the axis of the timeline. If not set, the date and time of the last event in the timeline is used.
+|-
+| eventmargin || int || 10 || The minimum margin in pixels between events.
+|-
+| eventmarginaxis || int || 10 || The minimum margin in pixels between events and the horizontal axis.
+|-
+| height || string || auto || The height of the timeline. This can be a height in any valid css size unit (px, em, %, etc) or 'auto' to indicate that the height should be calculated automatically. When height is set to "auto", a minimum height can be specified with the option minheight.
+|-
+| locale || string || en || Select the locale to use inside the CHAP Timeline library. Supported locales are:
+* ca: Catalan (aliases: ca_ES)
+* en: English (aliases: en_US, en_UK)
+* nl: Dutch (aliases: nl_NL, nl_BE)
+* fi: Finnish (aliases: fi_FI)
+* fr: French (aliases: fr_FR, fr_BE, fr_CA)
+* de: German (aliases: de_DE, de_CH)
+* da: Danish (aliases: da_DK)
+* ru: Russian (aliases: ru_RU)
+* es: Spanish (aliases: es_ES)
+* tr: Turkish (aliases: tr_TR)
+|-
+| max || datetime || none || The maximum date that can be shown in the timeline. If set it is not possible to move the timeline beyond this point. The maximum itself is excluded. If not set, no maximum is enforced.
+|-
+| min || datetime || none || The minimum date that can be shown in the timeline. If set, it is not possible to move the timeline before this point. The minimum is included. If not set, no minimum is enforced.
+|-
+| minheight || int || 0 || The minimum height of the timeline in pixels when 'height' has been set to "auto".
+|- 
+| moveable || boolean || true || If true, the timeline is moveable.
+|- 
+| stackevents || boolean || true || If true, the events are stacked above each other to prevent overlapping events.
+|- 
+| start || datetime || none || The initial start date for the axis of the timeline. If not set, the date and time of the first event in the timeline is used.
+|- 
+| style || string || box || The style for timeline events. May be "dot" or "box".
+|- 
+| showcurrenttime || boolean || true || If true, the timeline shows a red, vertical line displaying the current time.
+|- 
+| showmajorlabels || boolean || true || By default, the timeline shows both minor and major date labels on the horizontal axis. For example the minor labels show minutes and the major labels show hours. When showmajorlabels is false, no major labels are shown.
+|- 
+| showminorlabels || boolean || true || By default, the timeline shows both minor and major date labels on the horizontal axis. For example the minor labels show minutes and the major labels show hours. When showminorlabels is false, no minor labels are shown. When both showmajorlabels and showminorlabels are false, no horizontal axis will be visible.
+|- 
+| shownavigation || boolean || false || Show a navigation menu with buttons to move and zoom the timeline. The zoom buttons are only visible when option `zoomable` is true, and and move buttons are only visible when option `moveable` is true.
+|- 
+| width || string || 100% || The width of the timeline. This can be any valid css size unit (px, em, %, etc).
+|- 
+| zoomable || boolean || true || If true, the timeline is zoomable.
+|- 
+| zoommax || int || 315360000000000 || Set a maximum zoom interval for the visible range in milliseconds. It will not be possible to zoom out further than this maximum. Default value equals about 10000 years.
+|- 
+| zoommin || int || 10 || Set a minimum zoom interval for the visible range in milliseconds. It will not be possible to zoom in further than this minimum.
+|}
+
+===Event Syntax===
+Inside the &lt;itimeline&gt; tag you define the list of events to show in the timeline. You should include one event per line, and events may not span multiple lines. Events are defined using one or two datetime values and some text describing the event. The fields are separated by vertical bars '|':
+
+; &lt;datetime&gt;|&lt;event text&gt;
+: This format defines an event by giving the time of the event and some text describing the event.
+
+; &lt;datetime&gt;|&lt;datetime&gt;|&lt;event text&gt;
+: This format defines a range. The first datetime is the date and time at which the range starts, the second is the end date and time (inclusive). 
+
+'datetime' values should be provided in the format discussed above in the [[#Dates_and_times|Dates and times]] section. The event text may contain wiki text, so you may include images, links, or other formatting. Please note that complex wiki text should be avoided, or you will probably make the Timeline display go wonky. 
+
+The order in which events are defined is not important, and if the extension can not validate the definition of an event, it will be ignored.
+
+The body of the &lt;itimeline&gt; tag supports transclusion and template expansion, so you may define a list of events elsewhere and transclude them into the body of the &lt;itimeline&gt; tag.
+
+==Notes==
+<references />
+
+==See also==
+* [http://almende.github.io/chap-links-library/timeline.html CHAP Timeline] - the javascript library developed by [http://almende.com/ Almende], part of the CHAP Links Library.
+* [[Extension:ChapTimeline]] - a result format for Semantic MediaWiki that also uses the CHAP Timeline library for display.
+
+
+[[Category:Graphical Timelines{{translation}}]]
