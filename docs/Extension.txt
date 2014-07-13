@@ -36,7 +36,7 @@ cd InteractiveTimeline
 git submodule update --init
 </source>
 
-Note that the submodule update is '''required''', as that will fetch the [https://github.com/almende/chap-links-library CHAP Links Library], of which Timeline is a part.
+Note that the submodule update is important: that will fetch the [https://github.com/almende/chap-links-library CHAP Links Library], of which Timeline is a part.
 
 Once you have cloned the repository, add the following code at the bottom of your LocalSettings.php:
 {{#tag:source|
@@ -56,7 +56,7 @@ Once installed, you can place <code>&lt;itimeline&gt;...&lt;/itimeline&gt;</code
 <!-- These three are ranges, with start and end times -->
 2014-07-25T08:00:00Z|2014-07-26T15:00:00Z|[[Phase 1]]
 2014-07-26T12:00:00Z|2014-07-27T15:00:00Z|[[Phase 2]]
-2014-07-25T08:00:00Z|2014-08-23T23:59:59+02:00|Project 1
+2014-07-25T08:00:00Z|2014-08-00:00:00+02:00|Project 1
 </itimeline>
 </source>
 
@@ -65,12 +65,12 @@ All dates and times specified in an &lt;itimeline&gt; tag, whether as a value pr
 
 * Dates should be specified as a four digit year (the year including the century), followed by a two digit month (01 to 12), followed by a two digit day (01 to 31), with the sections optionally separated by hyphens. The form of the date should be <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code>, for example: <code>2014-07-12</code> or <code>20140712</code>.
 * If a time is specified, it must be separated from the date by a single space or the letter 'T'.
-* When provided, times should be specified as a two digit hour (00 to 23<ref>The ISO 8601 specification states that the hour can be in the range 00 to 24, where 00 is midnight at the start of the day, and 24 is midnight at the end. However, the javascript Date.parse() implementations in every browser I have tested fail to parse date strings with the house set to 24, and for safety this extension prevents it.</ref>), followed by a two digit minute (00 to 59), followed by a two digit second (00 to 59), with the fields optionally separated by colons. The time should be of the form <code>HH:MM:SS</code> or <code>HHMMSS</code>. The minutes and seconds are optional, and if not specified they default to "00". Decimal fractions are '''not''' supported for the time fields. All times '''must''' be followed by a time zone designator.
+* When provided, times should be specified as a two digit hour (00 to 23<ref>The ISO 8601 specification states that the hour can be in the range 00 to 24, where 00 is midnight at the start of the day, and 24 is midnight at the end. However, the javascript Date.parse() implementations in every browser I have tested fail to parse date strings with the house set to 24, and for safety this extension prevents it.</ref>), followed by a two digit minute (00 to 59), followed by a two digit second (00 to 59), with the fields optionally separated by colons. The time should be of the form <code>HH:MM:SS</code> or <code>HHMMSS</code>. The minutes and seconds are optional, and if not specified they default to "00". Decimal fractions are '''not''' supported for the time fields. Times '''must''' be followed by a time zone designator.
 * The time zone designator should either be "Z" to indicate that the time is in UTC, or it can be an offset from UTC specified as a positive or negative hours (and optionally minutes) of the form ±[HH]:[MM], ±[HH][MM], or ±[HH].
 
 For example, the following dates and times are valid:
 
-* <code>2014-07-12 17:10Z</code> (5:10 pm [[w:UTC|UTC]] on the 12th of July 2014)
+* <code>2014-07-12 17:10Z</code> (5:10pm [[w:UTC|UTC]] on the 12th of July 2014)
 * <code>2014-08-14</code> (00:00 [[w:UTC|UTC]] on the 14th of August 2014)
 * <code>2014-07-12T13:12:10-05:00</code> (13:12:10 in [[w:Central Daylight Time|Central Daylight Time]] on the 12th of July 2014)
 * <code>2014-08-14 08:24+02</code> (8:24am in [[w:Central European Summer Time|Central European Summer Time]] on the 14th of August 2014)
@@ -142,7 +142,7 @@ The following parameters may be specified in the &lt;itimeline&gt; tag. All para
 |- 
 | showminorlabels || boolean || true || By default, the timeline shows both minor and major date labels on the horizontal axis. For example the minor labels show minutes and the major labels show hours. When showminorlabels is false, no minor labels are shown. When both showmajorlabels and showminorlabels are false, no horizontal axis will be visible.
 |- 
-| shownavigation || boolean || false || Show a navigation menu with buttons to move and zoom the timeline. The zoom buttons are only visible when option `zoomable` is true, and and move buttons are only visible when option `moveable` is true.
+| shownavigation || boolean || false || Show a navigation menu with buttons to move and zoom the timeline. The zoom buttons are only visible when option zoomable is true, and and move buttons are only visible when option `moveable` is true.
 |- 
 | width || string || 100% || The width of the timeline. This can be any valid css size unit (px, em, %, etc).
 |- 
