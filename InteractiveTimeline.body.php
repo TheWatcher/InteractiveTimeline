@@ -82,10 +82,12 @@ class InteractiveTimeline {
 		$arg = trim( $arg );
 
 		// Note that this is not a full IS8601 checker - it does not support periods,
-		// ordinal dates, or decimals in the time section.
+		// ordinal dates, or decimals in the time section. It also only supports hours
+		// in the range 00-23 (ISO8601 allows 24) as *none* of the Date.parse() implementations
+		// in any browser I've checked will parse '24:00:00' correctly.
 		// $matches[N]       1         2                 3                         4                 5              6           7      8               9
 		//                   YYYY  -  MM            -  DD(restricted)          T   HH               :MM            :SS          Z +/-  HH             :MM
-		if ( preg_match( "/^(\d{4})-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])(?:[ T]([01]\d|2[0-4])(?::([0-5]\d))?(?::([0-5]\d))?([-+Z])(0\d|1[0-4])?(?::?([0-5]\d))?)?$/", $arg, $matches)){
+		if ( preg_match( "/^(\d{4})-?(0[1-9]|1[0-2])-?(0[1-9]|[12]\d|3[01])(?:[ T]([01]\d|2[0-3])(?::([0-5]\d))?(?::([0-5]\d))?([-+Z])(0\d|1[0-4])?(?::?([0-5]\d))?)?$/", $arg, $matches)){
 			$valid = true;
 
 			// Date must be specified in full
