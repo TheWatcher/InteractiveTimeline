@@ -58,13 +58,13 @@
 
 						 // Must have a start date and body element.
 						 if ( startdate && body ) {
-							 var event = { 'start': new Date( startdate.innerText ),
+							 var event = { 'start': new Date( startdate.innerHTML ),
 										   'content': body.innerHTML
 										 };
 
 							 // If an end date has be set, store that too.
 							 if ( enddate) {
-								 event['end'] = new Date( enddate.innerText )
+								 event['end'] = new Date( enddate.innerHTML )
 							 }
 
 							 data.push( event );
