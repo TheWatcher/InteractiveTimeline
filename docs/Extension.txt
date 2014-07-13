@@ -64,8 +64,9 @@ Once installed, you can place <code>&lt;itimeline&gt;...&lt;/itimeline&gt;</code
 All dates and times specified in an &lt;itimeline&gt; tag, whether as a value provided for a parameter, or as part of an event definition, should be formatted using a profile of [[w:ISO8601|ISO 8601]]. The dates and times accepted by InteractiveTimeline should take the form of a calendar date, optionally followed by a time:
 
 * Dates should be specified as a four digit year (the year including the century), followed by a two digit month (01 to 12), followed by a two digit day (01 to 31), with the sections optionally separated by hyphens. The form of the date should be <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code>, for example: <code>2014-07-12</code> or <code>20140712</code>.
+* If a time is not specified, the default of "00:00:00Z" (midnight UTC) is used for the time.
 * If a time is specified, it must be separated from the date by a single space or the letter 'T'.
-* When provided, times should be specified as a two digit hour (00 to 23<ref>The ISO 8601 specification states that the hour can be in the range 00 to 24, where 00 is midnight at the start of the day, and 24 is midnight at the end. However, the javascript Date.parse() implementations in every browser I have tested fail to parse date strings with the house set to 24, and for safety this extension prevents it.</ref>), followed by a two digit minute (00 to 59), followed by a two digit second (00 to 59), with the fields optionally separated by colons. The time should be of the form <code>HH:MM:SS</code> or <code>HHMMSS</code>. The minutes and seconds are optional, and if not specified they default to "00". Decimal fractions are '''not''' supported for the time fields. Times '''must''' be followed by a time zone designator.
+* When provided, times should be specified as a two digit hour (00 to 23<ref>The ISO 8601 specification states that the hour can be in the range 00 to 24, where 00 is midnight at the start of the day, and 24 is midnight at the end. However, the javascript Date.parse() implementations in every browser I have tested fail to parse date strings with the hours set to 24, and for safety this extension prevents it.</ref>), followed by a two digit minute (00 to 59), followed by a two digit second (00 to 59), with the fields optionally separated by colons. The time should be of the form <code>HH:MM:SS</code> or <code>HHMMSS</code>. The minutes and seconds are optional, and if not specified they default to "00". Decimal fractions are '''not''' supported for the time fields. Times '''must''' be followed by a time zone designator.
 * The time zone designator should either be "Z" to indicate that the time is in UTC, or it can be an offset from UTC specified as a positive or negative hours (and optionally minutes) of the form ±[HH]:[MM], ±[HH][MM], or ±[HH].
 
 For example, the following dates and times are valid:
@@ -98,11 +99,11 @@ The following parameters may be specified in the &lt;itimeline&gt; tag. All para
 |- 
 | animatezoom || boolean || true || When true, smooth animation is used to move events or ranges when zooming the timeline.
 |- 
-| axisontop || boolean || false || If true the time axis is show at the top of the timeline rather than the bottom.
+| axisontop || boolean || false || If true, the time axis is shown at the top of the timeline rather than the bottom.
 |-
 | cluster || boolean || false || If true, nearby events are clustered together when the timeline is zoomed out.
 |-
-| end || datetime || none || The initial end date for the axis of the timeline. If not set, the date and time of the last event in the timeline is used.
+| end || datetime || none || The date at the end of the timeline view when the timeline is initially shown. If not set, the date and time of the last event in the timeline is used.
 |-
 | eventmargin || int || 10 || The minimum margin in pixels between events.
 |-
@@ -122,9 +123,9 @@ The following parameters may be specified in the &lt;itimeline&gt; tag. All para
 * es: Spanish (aliases: es_ES)
 * tr: Turkish (aliases: tr_TR)
 |-
-| max || datetime || none || The maximum date that can be shown in the timeline. If set it is not possible to move the timeline beyond this point. The maximum itself is excluded. If not set, no maximum is enforced.
+| max || datetime || none || The maximum date that can be shown in the timeline. If set, it is not possible to move the timeline beyond this point (not to be confused with the 'end' parameter which controls the initial view end date). The maximum itself is excluded. If not set, no maximum is enforced.
 |-
-| min || datetime || none || The minimum date that can be shown in the timeline. If set, it is not possible to move the timeline before this point. The minimum is included. If not set, no minimum is enforced.
+| min || datetime || none || The minimum date that can be shown in the timeline. If set, it is not possible to move the timeline before this point (not be confused with the 'start', which controls the initial view start date). The minimum is included. If not set, no minimum is enforced.
 |-
 | minheight || int || 0 || The minimum height of the timeline in pixels when 'height' has been set to "auto".
 |- 
@@ -132,7 +133,7 @@ The following parameters may be specified in the &lt;itimeline&gt; tag. All para
 |- 
 | stackevents || boolean || true || If true, the events are stacked above each other to prevent overlapping events.
 |- 
-| start || datetime || none || The initial start date for the axis of the timeline. If not set, the date and time of the first event in the timeline is used.
+| start || datetime || none || The date at the beginning of the timeline view when the timeline is initially shown.  If not set, the date and time of the first event in the timeline is used.
 |- 
 | style || string || box || The style for timeline events. May be "dot" or "box".
 |- 
