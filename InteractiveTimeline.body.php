@@ -318,18 +318,12 @@ class InteractiveTimeline {
 					if ( $valid ) {
 						$output .= Html::element( 'div', array( 'class' => 'itl-end' ), $value );
 
-						// third part should be event content
-						$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
-
-						return $output;
 					}
-
-				// Only one date, so output the body
-				} else {
-					$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
-
-					return $output;
 				}
+
+				$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
+
+				return $output;
 			}
 		}
 
