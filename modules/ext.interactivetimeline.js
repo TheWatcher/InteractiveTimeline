@@ -52,19 +52,19 @@
 		events.each( function( index, elem ) {
 						 var jElem = $( elem );
 						 // Fetch the elements that contain the start, end, and body if possible
-						 var startdate = jElem.children( 'div.itl-start' ).get( 0 );
-						 var enddate = jElem.children( 'div.itl-end' ).get( 0 );
-						 var body = jElem.children( 'div.itl-body' ).get( 0 );
+						 var startdate = jElem.children( 'div.itl-start' ).text();
+						 var enddate = jElem.children( 'div.itl-end' ).text();
+						 var body = jElem.children( 'div.itl-body' ).html();
 
 						 // Must have a start date and body element.
 						 if ( startdate && body ) {
-							 var event = { 'start': new Date( startdate.innerHTML ),
-										   'content': body.innerHTML
+							 var event = { 'start': new Date( startdate ),
+										   'content': body
 										 };
 
 							 // If an end date has be set, store that too.
 							 if ( enddate) {
-								 event['end'] = new Date( enddate.innerHTML )
+								 event['end'] = new Date( enddate )
 							 }
 
 							 data.push( event );
