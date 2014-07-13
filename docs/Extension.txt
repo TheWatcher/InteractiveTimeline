@@ -9,7 +9,7 @@
 |author          = Chris Page
 |description     = Allow the insertion of interactive timelines using the CHAP Timeline library
 |image           = ITimeline_Example
-|version         = 1.0 (North Ealing)
+|version         = 1.1 (Stamford Brook)
 |mediawiki       = 1.19+
 |php             = 5.3+
 |needs-updatephp = No
