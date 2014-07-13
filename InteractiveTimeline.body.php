@@ -105,7 +105,7 @@ class InteractiveTimeline {
 					$date .= $matches[8];
 
 					// Minute part of time offset is optional
-					$date .= ( isset( $matches[9] ) && $matches[9] !== '' ? $matches[9] : "00" );
+					$date .= ":" . ( isset( $matches[9] ) && $matches[9] !== '' ? $matches[9] : "00" );
 				}
 
 			// Otherwise default to UTC explicitly (if not included the browser
