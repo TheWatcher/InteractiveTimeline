@@ -387,7 +387,7 @@ class InteractiveTimeline {
 
 		// Store the timeline setup and events in the mediawiki config object
 		$parserOutput = $parser -> getOutput();
-		$parserOutput -> addJSConfigVars( $elemID, FormatJson::encode( $options ) );
+		$parserOutput -> addJsConfigVars( $elemID, FormatJson::encode( $options ) );
 
 		return Html::rawelement( 'div', array( 'id' => $elemID, 'class' => 'itimeline' ), $events );
 	}
