@@ -376,6 +376,7 @@ class InteractiveTimeline {
 	 * @return string HTML to insert in the page.
 	 */
 	public static function parserHook( $input, $args = array(), $parser, $frame ) {
+		global $wgOut;
 
 		static $tlNumber = 0;
 		$elemID = 'itimeline-' . ++$tlNumber;
@@ -386,8 +387,7 @@ class InteractiveTimeline {
 		$events = self::buildTimelineEvents( $input, $parser, $frame );
 
 		// Store the timeline setup and events in the mediawiki config object
-		$parserOutput = $parser -> getOutput();
-		$parserOutput -> addJsConfigVars( $elemID, FormatJson::encode( $options ) );
+		$wgOut -> addJsConfigVars( $elemID, FormatJson::encode( $options ) );
 
 		return Html::rawelement( 'div', array( 'id' => $elemID, 'class' => 'itimeline' ), $events );
 	}
