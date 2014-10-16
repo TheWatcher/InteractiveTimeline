@@ -2,5 +2,5 @@
     "@metadata": {
         "authors": []
     },
-    "interactivetimeline-desc": "Adds <itimeline>...<itimeline> tag to provide interactive timelines using the CHAP Timeline library"
+    "interactivetimeline-desc": "Adds <nowiki><itimeline>...<itimeline></nowiki> tag to provide interactive timelines using the CHAP Timeline library"
 }
