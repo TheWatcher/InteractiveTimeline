@@ -22,6 +22,9 @@
 		base.init = function() {
 			base.config = JSON.parse( mw.config.get( base.$el.attr( 'id' ) ) );
 
+			// Fix up options that need to be in Date form
+			convertDateOptions(base.config);
+
 			// extract the data from the element
 			base.data = buildData( base.$el );
 
@@ -72,6 +75,27 @@
 					 });
 
 		return data;
+	};
+
+	/** Given an objet containing Timeline options, convert any options that
+	 *  should be Date objects from the string representation used in the
+	 *  serialised options into Date objects.
+	 * 
+	 * @param {Object} options The object containing the options to process.
+	 */
+	function convertDateOptions( options ) {
+		// The names of the options that should be Date objects
+		var dateOptions = ['min', 'max', 'start','end'];
+
+		// Options are optional, so only process the object if any are set.
+		if ( options ) {
+			// Convert the arguments if needed
+			dateOptions.forEach( function( opt ) {
+				if ( options[opt] != null && typeof options[opt] !== "Date" ) {
+					options[opt] = new Date( options[opt] );
+				}
+			});
+		}
 	};
 
 	// convert all itimeline div elements to timelines.
