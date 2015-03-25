@@ -264,9 +264,9 @@ class InteractiveTimeline {
 		self::validateArgument( $options, $args, 'end', 'datetime' );
 		self::validateArgument( $options, $args, 'eventMargin', 'integer' );
 		self::validateArgument( $options, $args, 'eventMarginAxis', 'integer' );
-		//self::validateArgument( $options, $args, 'groupsOnRight', 'boolean' );
-		//self::validateArgument( $options, $args, 'groupsWidth', 'csssize' );
-		//self::validateArgument( $options, $args, 'groupMinheight', 'integer' );
+		self::validateArgument( $options, $args, 'groupsOnRight', 'boolean' );
+		self::validateArgument( $options, $args, 'groupsWidth', 'csssize' );
+		self::validateArgument( $options, $args, 'groupMinheight', 'integer' );
 		self::validateArgument( $options, $args, 'height', 'csssize' );
 		self::validateArgument( $options, $args, 'locale', 'locale' );
 		self::validateArgument( $options, $args, 'max', 'datetime' );
@@ -301,8 +301,8 @@ class InteractiveTimeline {
 		// Sections are delimited by |
 		$parts = explode( "|", trim( $line ) );
 
-		// Lines *must* contsist of two parts: a date or interval, and the text
-		if ( count( $parts ) == 2 ) {
+		// Lines *must* consist of two or three parts: a date or interval, an optional group, and the text
+		if ( count( $parts ) == 2 || count( $parts ) == 3 ) {
 
 			// The first part might be an interval
 			$dates = explode( "/", $parts[0]);
@@ -321,7 +321,19 @@ class InteractiveTimeline {
 					}
 				}
 
-				$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $parts[1] );
+                $attrs = array( 'class' => 'itl-body' );
+
+                // Two parts implies date and text...
+                if ( count( $parts ) == 2 ) {
+                    $body = $parts[1];
+
+                // While three is date, group, and text
+                } else {
+                    $body = $parts[2];
+                    $attrs['title'] = htmlspecialcars( $parts[1], ENT_QUOTES ); // Make sure the group can't contain anything malicious
+                }
+
+				$output .= Html::rawelement( 'div', $attrs, $body );
 
 				return $output;
 			}

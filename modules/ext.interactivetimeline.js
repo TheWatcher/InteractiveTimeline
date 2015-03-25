@@ -57,17 +57,18 @@
 						 // Fetch the elements that contain the start, end, and body if possible
 						 var startdate = jElem.children( 'div.itl-start' ).text();
 						 var enddate = jElem.children( 'div.itl-end' ).text();
-						 var body = jElem.children( 'div.itl-body' ).html();
+						 var body = jElem.children( 'div.itl-body' );
 
 						 // Must have a start date and body element.
 						 if ( startdate && body ) {
 							 var event = { 'start': new Date( startdate ),
-										   'content': body
+										   'content': body.html(),
+                                           'group': body.attr('title')
 										 };
 
 							 // If an end date has be set, store that too.
 							 if ( enddate) {
-								 event['end'] = new Date( enddate )
+								 event.end = new Date( enddate )
 							 }
 
 							 data.push( event );
@@ -80,7 +81,7 @@
 	/** Given an objet containing Timeline options, convert any options that
 	 *  should be Date objects from the string representation used in the
 	 *  serialised options into Date objects.
-	 * 
+	 *
 	 * @param {Object} options The object containing the options to process.
 	 */
 	function convertDateOptions( options ) {
