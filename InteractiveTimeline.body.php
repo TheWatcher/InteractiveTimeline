@@ -321,8 +321,6 @@ class InteractiveTimeline {
 					}
 				}
 
-                $attrs = array( 'class' => 'itl-body' );
-
                 // Two parts implies date and text...
                 if ( count( $parts ) == 2 ) {
                     $body = $parts[1];
@@ -330,10 +328,10 @@ class InteractiveTimeline {
                 // While three is date, group, and text
                 } else {
                     $body = $parts[2];
-                    $attrs['title'] = htmlspecialchars( $parts[1], ENT_QUOTES ); // Make sure the group can't contain anything malicious
+                    $output .= Html::rawelement( 'div', array( 'class' => 'itl-group' ), $parts[1] );
                 }
+				$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $body );
 
-				$output .= Html::rawelement( 'div', $attrs, $body );
 
 				return $output;
 			}

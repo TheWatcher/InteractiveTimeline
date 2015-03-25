@@ -57,13 +57,14 @@
 						 // Fetch the elements that contain the start, end, and body if possible
 						 var startdate = jElem.children( 'div.itl-start' ).text();
 						 var enddate = jElem.children( 'div.itl-end' ).text();
-						 var body = jElem.children( 'div.itl-body' );
+						 var body = jElem.children( 'div.itl-body' ).html();
+						 var group = jElem.children( 'div.itl-group' ).html();
 
 						 // Must have a start date and body element.
 						 if ( startdate && body ) {
 							 var event = { 'start': new Date( startdate ),
-										   'content': body.html(),
-                                           'group': body.attr('title')
+										   'content': body,
+                                           'group': group
 										 };
 
 							 // If an end date has be set, store that too.
