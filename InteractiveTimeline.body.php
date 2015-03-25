@@ -330,7 +330,7 @@ class InteractiveTimeline {
                 // While three is date, group, and text
                 } else {
                     $body = $parts[2];
-                    $attrs['title'] = htmlspecialcars( $parts[1], ENT_QUOTES ); // Make sure the group can't contain anything malicious
+                    $attrs['title'] = htmlspecialchars( $parts[1], ENT_QUOTES ); // Make sure the group can't contain anything malicious
                 }
 
 				$output .= Html::rawelement( 'div', $attrs, $body );
