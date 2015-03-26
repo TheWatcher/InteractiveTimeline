@@ -321,15 +321,15 @@ class InteractiveTimeline {
 					}
 				}
 
-                // Two parts implies date and text...
-                if ( count( $parts ) == 2 ) {
-                    $body = $parts[1];
+				// Two parts implies date and text...
+				if ( count( $parts ) == 2 ) {
+					$body = $parts[1];
 
-                // While three is date, group, and text
-                } else {
-                    $body = $parts[2];
-                    $output .= Html::rawelement( 'div', array( 'class' => 'itl-group' ), $parts[1] );
-                }
+				// While three is date, group, and text
+				} else {
+					$body = $parts[2];
+					$output .= Html::rawelement( 'div', array( 'class' => 'itl-group' ), $parts[1] );
+				}
 				$output .= Html::rawelement( 'div', array( 'class' => 'itl-body' ), $body );
 
 

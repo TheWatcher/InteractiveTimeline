@@ -61,7 +61,7 @@
 						 if ( startdate && body ) {
 							 var event = { 'start': new Date( startdate ),
 										   'content': body,
-                                           'group': group
+										   'group': group
 										 };
 
 							 // If an end date has be set, store that too.
@@ -76,25 +76,25 @@
 		return data;
 	};
 
-    /** Read the configuration for the timeline from the itl-config div.
-     * This parses the timeline configuration out of the config div, and
-     * returns an object containing the settings.
-     *
+	/** Read the configuration for the timeline from the itl-config div.
+	 * This parses the timeline configuration out of the config div, and
+	 * returns an object containing the settings.
+	 *
 	 * @param {Object} element The jQuery element for the timeline.
 	 * @return {Object} An object containing the timeline settings.
-     */
-    function fetchConfig( element ) {
+	 */
+	function fetchConfig( element ) {
 		var rawconfig = element.children( 'div.itl-config' ).text();
 
-        if ( rawconfig ) {
-            var config = JSON.parse( rawconfig );
+		if ( rawconfig ) {
+			var config = JSON.parse( rawconfig );
 
 			// Fix up options that need to be in Date form
 			convertDateOptions(config);
-        }
+		}
 
-        return { };
-    }
+		return { };
+	}
 
 	/** Given an objet containing Timeline options, convert any options that
 	 *  should be Date objects from the string representation used in the
