@@ -90,7 +90,7 @@
 			var config = JSON.parse( rawconfig );
 
 			// Fix up options that need to be in Date form
-			convertDateOptions(config);
+			return convertDateOptions(config);
 		}
 
 		return { };
@@ -115,6 +115,8 @@
 				}
 			});
 		}
+
+        return options;
 	};
 
 	// convert all itimeline div elements to timelines.
