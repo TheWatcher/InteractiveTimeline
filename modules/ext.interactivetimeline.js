@@ -20,7 +20,7 @@
 		base.$el.data( "InteractiveTimeline", base );
 
 		base.init = function() {
-			base.config = JSON.parse( mw.config.get( base.$el.attr( 'id' ) ) );
+			base.config = fetchConfig(base.$el);
 
 			// Fix up options that need to be in Date form
 			convertDateOptions(base.config);
@@ -78,6 +78,19 @@
 
 		return data;
 	};
+
+    /** Read the configuration for the timeline from the itl-config div.
+     *
+     */
+    function fetchConfig( element ) {
+		var rawconfig = element.children( 'div.itl-config' ).text();
+
+        if ( rawconfig ) {
+            return JSON.parse( rawconfig );
+        }
+
+        return { };
+    }
 
 	/** Given an objet containing Timeline options, convert any options that
 	 *  should be Date objects from the string representation used in the

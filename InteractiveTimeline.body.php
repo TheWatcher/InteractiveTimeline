@@ -394,12 +394,12 @@ class InteractiveTimeline {
 		$options = array();
 		self::buildTimelineOptions( $options, $args );
 
-		$events = self::buildTimelineEvents( $input, $parser, $frame );
+		$timelinedata = self::buildTimelineEvents( $input, $parser, $frame );
 
-		// Store the timeline setup and events in the mediawiki config object
-		$wgOut -> addJsConfigVars( $elemID, FormatJson::encode( $options ) );
+		// Store the timeline setup
+		$timelinedata .=  Html::rawelement( 'div', array( 'class' => 'itl-config' ), FormatJson::encode( $options ) );
 
-		return Html::rawelement( 'div', array( 'id' => $elemID, 'class' => 'itimeline' ), $events );
+		return Html::rawelement( 'div', array( 'id' => $elemID, 'class' => 'itimeline' ), $timelinedata );
 	}
 
 
