@@ -1,0 +1,34 @@
+Version 1.5 (Baker Street) 2015-03-26
+
+	[BUG FIXES]
+
+    * Moved itimeline configuration data out of mw.config (Issue #4)
+
+Version 1.4 (Temple) 2015-03-25
+
+    [ENHANCEMENTS]
+
+    * Allow groups to contain simple markup (images, formatting, links)
+
+Version 1.3 (Warren Street) 2015-03-25
+
+    [ENHANCEMENTS]
+
+    * Enable support for grouping in timelines. (Issue #3, Luis Miguel Morillas)
+
+Version 1.2 (Lancaster Gate) 2015-01-19
+
+    [BUG FIXES]
+
+    * Fix handling of date options (min, max, start, end) (Issue #2, knyazhe1)
+
+Version 1.1 (Stamford Brook) 2014-07-13
+
+    [BUG FIXES]
+
+    * Disallow 24:00:00 time in events (Date.parse() failure in all the browsers)
+    * Stupid bugs in event start/end date parsing
+
+Version 1.0 (North Ealing) 2014-07-12
+
+    Initial release.
