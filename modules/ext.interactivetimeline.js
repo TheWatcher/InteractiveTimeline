@@ -22,9 +22,6 @@
 		base.init = function() {
 			base.config = fetchConfig(base.$el);
 
-			// Fix up options that need to be in Date form
-			convertDateOptions(base.config);
-
 			// extract the data from the element
 			base.data = buildData( base.$el );
 
@@ -80,13 +77,20 @@
 	};
 
     /** Read the configuration for the timeline from the itl-config div.
+     * This parses the timeline configuration out of the config div, and
+     * returns an object containing the settings.
      *
+	 * @param {Object} element The jQuery element for the timeline.
+	 * @return {Object} An object containing the timeline settings.
      */
     function fetchConfig( element ) {
 		var rawconfig = element.children( 'div.itl-config' ).text();
 
         if ( rawconfig ) {
-            return JSON.parse( rawconfig );
+            var config = JSON.parse( rawconfig );
+
+			// Fix up options that need to be in Date form
+			convertDateOptions(config);
         }
 
         return { };
