@@ -1,6 +1,6 @@
 Version 1.5 (Baker Street) 2015-03-26
 
-	[BUG FIXES]
+    [BUG FIXES]
 
     * Moved itimeline configuration data out of mw.config (Issue #4)
 
