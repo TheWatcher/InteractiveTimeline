@@ -1,0 +1,45 @@
+{
+	"name": "InteractiveTimeline",
+	"version": "1.6.0",
+	"license-name": "GPL-2.0+",
+	"author": [
+		"Chris Page"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:InteractiveTimeline",
+	"descriptionmsg": "interactivetimeline-desc",
+	"type": "parserhook",
+	"MessagesDirs": {
+		"InteractiveTimeline": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"InteractiveTimeline": "InteractiveTimeline.body.php"
+	},
+	"ResourceModules": {
+		"ext.InteractiveTimeline.timeline": {
+			"scripts": [
+				"timeline-min.js",
+				"timeline-locales.js"
+			],
+			"styles": "timeline.css",
+			"position": "top"
+		},
+		"ext.InteractiveTimeline.loader": {
+			"localBasePath": "modules",
+			"remoteExtPath": "InteractiveTimeline/modules",
+			"scripts": "ext.interactivetimeline.js",
+			"styles": "ext.interactivetimeline.css",
+			"position": "top"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "chap-links-library/js/src/timeline",
+		"remoteExtPath": "InteractiveTimeline/chap-links-library/js/src/timeline"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "InteractiveTimeline::onParserFirstCallInit",
+		"BeforePageDisplay": "InteractiveTimeline::onBeforePageDisplay"
+	},
+	"manifest_version": 1
+}

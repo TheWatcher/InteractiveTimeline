@@ -25,56 +25,22 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @file
  * @ingroup Extensions
  * @author Chris Page <chris@starforge.co.uk>
- * @copyright Copyright © 2014 Chris Page
+ * @copyright Copyright © 2014-2016 Chris Page
  * @license GNU General Public Licence 2.0 or later
  */
 
-// Set up the extension Special:Version information
-$wgExtensionCredits['parserhook'][] = array(
-		'path'           => __FILE__,
-		'name'           => 'InteractiveTimeline',
-		'version'        => '0.1.0',
-		'url'            => '',
-		'descriptionmsg' => 'interactivetimeline-desc',
-		'author'         => array( 'Chris Page' )
-);
-
-// Register files
-$wgAutoloadClasses['InteractiveTimeline'] = __DIR__ . '/InteractiveTimeline.body.php';
-$wgMessagesDirs['InteractiveTimeline'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['InteractiveTimeline'] = __DIR__ . '/InteractiveTimeline.i18n.php';
-
-// Register hooks
-$wgHooks['ParserFirstCallInit'][] = 'InteractiveTimeline::onParserFirstCallInit';
-$wgHooks['BeforePageDisplay'][] = 'InteractiveTimeline::onBeforePageDisplay';
-
-// Register modules
-
-/* If using chap-links-library as a git submodule, use the following */
-$chapResourceTemplate = array(
-		'localBasePath' => __DIR__.'/chap-links-library/js/src/timeline',
-		'remoteExtPath' => 'InteractiveTimeline/chap-links-library/js/src/timeline',
-);
-
-/* If using just the timeline files, use the following */
-/* $chapResourceTemplate = array(
-		'localBasePath' => __DIR__.'/timeline',
-		'remoteExtPath' => 'InteractiveTimeline/timeline',
-); */
-
-$wgResourceModules['ext.InteractiveTimeline.timeline'] = $chapResourceTemplate + array(
-		'scripts'  => array (
-				'timeline-min.js',
-				'timeline-locales.js'
-		),
-		'styles'   => 'timeline.css',
-		'position' => 'top',
-);
-
-$wgResourceModules['ext.InteractiveTimeline.loader'] = array(
-		'localBasePath' => __DIR__.'/modules',
-		'remoteExtPath' => 'InteractiveTimeline/modules',
-		'scripts'       => 'ext.interactivetimeline.js',
-		'styles'        => 'ext.interactivetimeline.css',
-		'position'      => 'top',
-);
+<?php
+if ( function_exists( 'wfLoadExtension' ) ) {
+	wfLoadExtension( 'InteractiveTimeline' );
+	// Keep i18n globals so mergeMessageFileList.php doesn't break
+	$wgMessagesDirs['InteractiveTimeline'] = __DIR__ . '/i18n';
+	$wgExtensionMessagesFiles['InteractiveTimelineAlias'] = __DIR__ . '/InteractiveTimeline.alias.php';
+	wfWarn(
+		'Deprecated PHP entry point used for InteractiveTimeline extension. ' .
+		'Please use wfLoadExtension instead, ' .
+		'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
+	);
+	return;
+} else {
+	die( 'This version of the InteractiveTimeline extension requires MediaWiki 1.25+' );
+}
