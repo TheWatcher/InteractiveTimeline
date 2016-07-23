@@ -29,7 +29,6 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @license GNU General Public Licence 2.0 or later
  */
 
-<?php
 if ( function_exists( 'wfLoadExtension' ) ) {
 	wfLoadExtension( 'InteractiveTimeline' );
 	// Keep i18n globals so mergeMessageFileList.php doesn't break
