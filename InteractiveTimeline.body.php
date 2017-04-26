@@ -413,8 +413,8 @@ class InteractiveTimeline {
 	public static function onBeforePageDisplay( &$out, &$skin ) {
 
 		// Ensure that the required resource modules are loaded
-		$out->addModules( 'ext.InteractiveTimeline.loader' );
 		$out->addModules( 'ext.InteractiveTimeline.timeline' );
+		$out->addModules( 'ext.InteractiveTimeline.loader' );
 
 		return true;
 	}
