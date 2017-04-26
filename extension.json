@@ -23,14 +23,12 @@
 				"timeline-locales.js"
 			],
 			"styles": "timeline.css",
-			"position": "top"
 		},
 		"ext.InteractiveTimeline.loader": {
 			"localBasePath": "modules",
 			"remoteExtPath": "InteractiveTimeline/modules",
 			"scripts": "ext.interactivetimeline.js",
 			"styles": "ext.interactivetimeline.css",
-			"position": "top"
 		}
 	},
 	"ResourceFileModulePaths": {
