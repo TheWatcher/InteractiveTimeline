@@ -1,6 +1,6 @@
 /**
  * Main javascript file for the Interactive Timeline extension. This file
- * is needed to instantiate links.Timeline objects wherever itimeline
+ * is needed to instantiate vis.Timeline objects wherever itimeline
  * divs are found on a page, converting the list of events in the div
  * into a format Timeline can understand.
  *
@@ -38,7 +38,7 @@
 
 	/**
 	 * Convert the itl-event children of the specified container to an
-	 * array of event objects suitable to pass to links.Timeline.
+	 * array of event objects suitable to pass to vis.Timeline.
 	 *
 	 * @param {Object} container The jQuery element containing the event data.
 	 * @return {Array} An array of event objects.
