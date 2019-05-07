@@ -26,7 +26,7 @@
 			base.data = buildData( base.$el );
 
 			// Build the new timeline
-			base.timeline = new links.Timeline( base.el, base.config );
+			base.timeline = new vis.Timeline( base.el, base.config );
 
 			// Draw our timeline with the created data and options
 			base.timeline.draw( base.data );
