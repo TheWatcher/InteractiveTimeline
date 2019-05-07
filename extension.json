@@ -19,8 +19,8 @@
 	"ResourceModules": {
 		"ext.InteractiveTimeline.timeline": {
 			"scripts": [
-				"timeline-min.js",
-				"timeline-locales.js"
+				"vis.js",
+				"vis-timeline-graph2d.min.js"
 			],
 			"styles": "timeline.css"
 		},
@@ -32,8 +32,8 @@
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "chap-links-library/js/src/timeline",
-		"remoteExtPath": "InteractiveTimeline/chap-links-library/js/src/timeline"
+		"localBasePath": "vis.js/dist",
+		"remoteExtPath": "InteractiveTimeline/vis.js/dist"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": "InteractiveTimeline::onParserFirstCallInit",

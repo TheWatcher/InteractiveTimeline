@@ -1,3 +1,6 @@
 [submodule "chap-links-library"]
 	path = chap-links-library
 	url = https://github.com/almende/chap-links-library.git
+[submodule "vis.js"]
+	path = vis.js
+	url = https://github.com/almende/vis.git
