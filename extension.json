@@ -18,11 +18,8 @@
 	},
 	"ResourceModules": {
 		"ext.InteractiveTimeline.timeline": {
-			"scripts": [
-				"vis.js",
-				"vis-timeline-graph2d.min.js"
-			],
-			"styles": "timeline.css"
+			"scripts": "vis.js",
+			"styles": "vis-timeline-graph2d.min..css"
 		},
 		"ext.InteractiveTimeline.loader": {
 			"localBasePath": "modules",
