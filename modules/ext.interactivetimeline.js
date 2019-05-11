@@ -26,7 +26,7 @@
 			base.data = buildData( base.$el );
 
 			// Build the new timeline
-			base.timeline = new vis.Timeline( base.el, base.confi, base.data );
+			base.timeline = new vis.Timeline( base.el, base.data, base.config );
 		};
 
 		// Run initializer
