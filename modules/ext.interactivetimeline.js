@@ -26,7 +26,10 @@
 			base.data = buildData( base.$el );
 
 			// Build the new timeline
-			base.timeline = new vis.Timeline( base.el, base.data, base.config );
+			base.timeline = new vis.Timeline( base.el );
+			base.timeline.setOptions(base.config);
+			if(base.data.groups) base.timeline.setGroups(base.data.groups);
+			base.timeline.setItems(base.data.items);
 		};
 
 		// Run initializer
@@ -43,32 +46,56 @@
 	function buildData( container ) {
 		// Get the list of itl-events defined for this timeline container
 		var events = container.children( 'div.itl-event' );
-		var data = [];
+		var data   = {};
+		data.items = new vis.DataSet();
+		var groups = new vis.DataSet();
+		var groupc = 0;
+		var grouphash = {};
 
 		// Process each event into an object timeline can understand.
 		events.each( function( index, elem ) {
-						 var jElem = $( elem );
-						 // Fetch the elements that contain the start, end, and body if possible
-						 var startdate = jElem.children( 'div.itl-start' ).text();
-						 var enddate = jElem.children( 'div.itl-end' ).text();
-						 var body = jElem.children( 'div.itl-body' ).html();
-						 var group = jElem.children( 'div.itl-group' ).html();
+			var jElem = $( elem );
+			// Fetch the elements that contain the start, end, and body if possible
+			var startdate = jElem.children( 'div.itl-start' ).text();
+			var enddate = jElem.children( 'div.itl-end' ).text();
+			var body = jElem.children( 'div.itl-body' ).html();
+			var group = jElem.children( 'div.itl-group' ).html();
 
-						 // Must have a start date and body element.
-						 if ( startdate && body ) {
-							 var event = { 'start': new Date( startdate ),
-										   'content': body,
-										   'group': group
-										 };
+			// If a group has been specified, convert it to an ID.
+			if(group !== undefined) {
+				if(!grouphash[group]) {
+					grouphash[group] = ++groupc;
+				}
 
-							 // If an end date has be set, store that too.
-							 if ( enddate) {
-								 event.end = new Date( enddate )
-							 }
+				group = grouphash[group];
+			}
 
-							 data.push( event );
-						 }
-					 });
+			// Must have a start date and body element.
+			if ( startdate && body ) {
+				var event = { 'start': new Date( startdate ),
+							  'content': body,
+							};
+				if(group !== undefined) event.group = group
+
+				// If an end date has be set, store that too.
+				if ( enddate) {
+					event.end = new Date( enddate )
+				}
+
+				data.items.add( event );
+			}
+		});
+
+		// If we have any groups, build a group data set
+		if(Object.keys(grouphash).length) {
+			$.each(grouphash, function (key, val) {
+				groups.add({ "id": val,
+							 "content": key
+						   });
+			});
+
+			data.groups = groups;
+		}
 
 		return data;
 	};
@@ -113,7 +140,7 @@
 			});
 		}
 
-        return options;
+		return options;
 	};
 
 	// convert all itimeline div elements to timelines.
