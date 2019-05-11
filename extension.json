@@ -8,6 +8,10 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:InteractiveTimeline",
 	"descriptionmsg": "interactivetimeline-desc",
 	"type": "parserhook",
+	"config": {
+ 		"ITvisjsCDNjs": "https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js",
+ 		"ITvisjsCDNcss": "https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css"
+	},
 	"MessagesDirs": {
 		"InteractiveTimeline": [
 			"i18n"
@@ -17,20 +21,14 @@
 		"InteractiveTimeline": "InteractiveTimeline.body.php"
 	},
 	"ResourceModules": {
-		"ext.InteractiveTimeline.timeline": {
-			"scripts": "vis.js",
-			"styles": "vis-timeline-graph2d.min.css"
-		},
 		"ext.InteractiveTimeline.loader": {
-			"localBasePath": "modules",
-			"remoteExtPath": "InteractiveTimeline/modules",
-			"scripts": "ext.interactivetimeline.js",
-			"styles": "ext.interactivetimeline.css"
+			"scripts": "modules/ext.interactivetimeline.js",
+			"styles": "modules/ext.interactivetimeline.css"
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "vis.js/dist",
-		"remoteExtPath": "InteractiveTimeline/vis.js/dist"
+		"localBasePath": "",
+		"remoteExtPath": "InteractiveTimeline"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": "InteractiveTimeline::onParserFirstCallInit",
