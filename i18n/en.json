@@ -4,5 +4,5 @@
 			"Chris Page"
 		]
 	},
-	"interactivetimeline-desc": "Adds <nowiki><itimeline>...<itimeline></nowiki> tag to provide interactive timelines using the CHAP Timeline library"
+	"interactivetimeline-desc": "Adds <nowiki><itimeline>...<itimeline></nowiki> tag to provide interactive timelines using the vis.js Timeline"
 }
