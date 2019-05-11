@@ -1,3 +1,9 @@
+Version 1.9 (Canada Water) 2019-05-11
+
+    [BUG FIXES]
+
+    * Replaced CHAP links library with Vis.js loaded from CDN
+
 Version 1.6 (Moorgate) 2016-07-23
 
     [ENHANCEMENTS]
