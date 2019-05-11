@@ -254,32 +254,21 @@ class InteractiveTimeline {
 
 		// Establish any defaults that differ from timeline's own defaults
 		$options['selectable']= false;      // No point in making timeline entries selectable
-		$options['timeChangeable'] = false; // probably redundant as editable is false, but be sure.
 
 		// And now check any user-specified arguments
-		self::validateArgument( $options, $args, 'animate', 'boolean' );
-		self::validateArgument( $options, $args, 'animateZoom', 'boolean' );
-		self::validateArgument( $options, $args, 'axisOnTop', 'boolean' );
-		self::validateArgument( $options, $args, 'cluster', 'boolean' );
 		self::validateArgument( $options, $args, 'end', 'datetime' );
-		self::validateArgument( $options, $args, 'eventMargin', 'integer' );
-		self::validateArgument( $options, $args, 'eventMarginAxis', 'integer' );
-		self::validateArgument( $options, $args, 'groupsOnRight', 'boolean' );
-		self::validateArgument( $options, $args, 'groupsWidth', 'csssize' );
-		self::validateArgument( $options, $args, 'groupMinheight', 'integer' );
 		self::validateArgument( $options, $args, 'height', 'csssize' );
 		self::validateArgument( $options, $args, 'locale', 'locale' );
 		self::validateArgument( $options, $args, 'max', 'datetime' );
 		self::validateArgument( $options, $args, 'min', 'datetime' );
 		self::validateArgument( $options, $args, 'minHeight', 'integer' );
 		self::validateArgument( $options, $args, 'moveable', 'boolean' );
-		self::validateArgument( $options, $args, 'stackEvents', 'boolean' );
+		self::validateArgument( $options, $args, 'stack', 'boolean' );
 		self::validateArgument( $options, $args, 'start', 'datetime' );
 		self::validateArgument( $options, $args, 'style', 'timestyle' );
 		self::validateArgument( $options, $args, 'showCurrentTime', 'boolean' );
 		self::validateArgument( $options, $args, 'showMajorLabels', 'boolean' );
 		self::validateArgument( $options, $args, 'showMinorLabels', 'boolean' );
-		self::validateArgument( $options, $args, 'showNavigation', 'boolean' );
 		self::validateArgument( $options, $args, 'width', 'csssize' );
 		self::validateArgument( $options, $args, 'zoomable', 'boolean' );
 		self::validateArgument( $options, $args, 'zoomMax', 'integer' );
