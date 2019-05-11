@@ -400,10 +400,18 @@ class InteractiveTimeline {
 	 * @return boolean Always returns true.
 	 */
 	public static function onBeforePageDisplay( &$out, &$skin ) {
+		global $wgITvisjsCDNcss, $wgITvisjsCDNjs;
 
 		// Ensure that the required resource modules are loaded
-		$out->addModules( 'ext.InteractiveTimeline.timeline' );
 		$out->addModules( 'ext.InteractiveTimeline.loader' );
+
+		// Load vis.js from a CDN.
+		$script = '
+			<link rel="stylesheet" type="text/css" href="'.$wgITvisjsCDNcss.'">
+			<script type="text/javascript" src="'.$wgITvisjsCDNjs.'"></script>
+		';
+
+		$out->addHeadItem("InteractiveTimeline CDN", $script);
 
 		return true;
 	}
